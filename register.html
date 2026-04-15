@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Register — Age of The Death</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .auth-page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 5rem 1.5rem 2rem;
+      position: relative;
+    }
+
+    .auth-bg {
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 60% at 30% 50%, rgba(58, 107, 138, 0.08) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 60% at 70% 50%, rgba(123, 94, 167, 0.08) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .auth-container {
+      width: 100%;
+      max-width: 480px;
+      position: relative;
+      z-index: 1;
+      opacity: 0;
+      animation: fadeInUp 0.7s ease 0.1s forwards;
+    }
+
+    .auth-header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .auth-logo {
+      height: 50px;
+      margin-bottom: 1.5rem;
+      filter: drop-shadow(0 0 12px rgba(123, 94, 167, 0.5));
+    }
+
+    .auth-title {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 1.5rem;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .auth-subtitle {
+      color: var(--text-secondary);
+      font-style: italic;
+      font-size: 0.95rem;
+    }
+
+    .auth-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 2.5rem;
+      position: relative;
+    }
+
+    .auth-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent-purple), var(--accent-blue), transparent);
+    }
+
+    .btn-full {
+      width: 100%;
+      padding: 14px;
+      text-align: center;
+    }
+
+    .auth-footer {
+      text-align: center;
+      margin-top: 1.5rem;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .auth-footer a {
+      color: var(--accent-glow);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .auth-footer a:hover {
+      color: var(--text-primary);
+    }
+
+    .password-wrapper {
+      position: relative;
+    }
+
+    .toggle-password {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 1rem;
+      transition: color 0.3s;
+    }
+
+    .toggle-password:hover {
+      color: var(--text-primary);
+    }
+
+    .password-strength {
+      margin-top: 6px;
+      height: 3px;
+      background: var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .password-strength-bar {
+      height: 100%;
+      width: 0;
+      transition: width 0.3s, background 0.3s;
+    }
+
+    .strength-text {
+      font-size: 0.75rem;
+      margin-top: 4px;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <a href="index.html" class="nav-logo">
+      <img src="img/logo.png" alt="HERA" />
+      <span>Age of The Death</span>
+    </a>
+    <button class="hamburger" id="hamburger">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="ranking.html">Ranking</a></li>
+      <li id="nav-profile" style="display:none"><a href="perfil.html">Profile</a></li>
+      <li id="nav-logout" style="display:none"><a href="#" class="btn-nav">Logout</a></li>
+      <li id="nav-login"><a href="login.html" class="btn-nav">Login</a></li>
+      <li id="nav-register"><a href="register.html">Register</a></li>
+    </ul>
+  </nav>
+
+  <div class="auth-bg"></div>
+
+  <main class="auth-page">
+    <div class="auth-container">
+      <div class="auth-header">
+        <img src="img/logo.png" alt="HERA" class="auth-logo" />
+        <h1 class="auth-title">Join the Battle</h1>
+        <p class="auth-subtitle">Create your account and enter the Age of The Death</p>
+      </div>
+
+      <div class="auth-card">
+        <div class="alert alert-error" id="alert-error"></div>
+        <div class="alert alert-success" id="alert-success"></div>
+
+        <form id="register-form" novalidate>
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" placeholder="YourWarriorName" autocomplete="username" />
+            <span class="form-error" id="error-username">Username must be at least 3 characters.</span>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="your@email.com" autocomplete="email" />
+            <span class="form-error" id="error-email">Please enter a valid email.</span>
+          </div>
+
+          <div class="form-group">
+            <label for="password">Password</label>
+            <div class="password-wrapper">
+              <input type="password" id="password" placeholder="••••••••" autocomplete="new-password" />
+              <button type="button" class="toggle-password" id="toggle-pwd">👁</button>
+            </div>
+            <div class="password-strength">
+              <div class="password-strength-bar" id="strength-bar"></div>
+            </div>
+            <span class="strength-text" id="strength-text"></span>
+            <span class="form-error" id="error-password">Password must be at least 6 characters.</span>
+          </div>
+
+          <div class="form-group">
+            <label for="confirm-password">Confirm Password</label>
+            <div class="password-wrapper">
+              <input type="password" id="confirm-password" placeholder="••••••••" autocomplete="new-password" />
+              <button type="button" class="toggle-password" id="toggle-pwd2">👁</button>
+            </div>
+            <span class="form-error" id="error-confirm">Passwords do not match.</span>
+          </div>
+
+          <button type="submit" class="btn-primary btn-full" id="btn-register">
+            Begin Your Legend
+          </button>
+        </form>
+
+        <div class="divider"><span>or</span></div>
+
+        <div class="auth-footer">
+          Already have an account? <a href="login.html">Login here</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    if (isLoggedIn()) window.location.href = 'perfil.html';
+
+    // Toggle passwords
+    $('#toggle-pwd').on('click', function () {
+      const input = $('#password');
+      const type = input.attr('type') === 'password' ? 'text' : 'password';
+      input.attr('type', type);
+      $(this).text(type === 'password' ? '👁' : '🙈');
+    });
+
+    $('#toggle-pwd2').on('click', function () {
+      const input = $('#confirm-password');
+      const type = input.attr('type') === 'password' ? 'text' : 'password';
+      input.attr('type', type);
+      $(this).text(type === 'password' ? '👁' : '🙈');
+    });
+
+    // Password strength
+    $('#password').on('input', function () {
+      const val = $(this).val();
+      const bar = $('#strength-bar');
+      const text = $('#strength-text');
+      let strength = 0;
+      if (val.length >= 6) strength++;
+      if (val.length >= 10) strength++;
+      if (/[A-Z]/.test(val)) strength++;
+      if (/[0-9]/.test(val)) strength++;
+      if (/[^A-Za-z0-9]/.test(val)) strength++;
+
+      const levels = [
+        { w: '0%', c: 'transparent', t: '' },
+        { w: '25%', c: '#c0392b', t: 'Weak' },
+        { w: '50%', c: '#e67e22', t: 'Fair' },
+        { w: '75%', c: '#f1c40f', t: 'Good' },
+        { w: '100%', c: '#27ae60', t: 'Strong' },
+      ];
+      const l = levels[Math.min(strength, 4)];
+      bar.css({ width: l.w, background: l.c });
+      text.text(l.t).css('color', l.c);
+    });
+
+    $('#register-form').on('submit', async function (e) {
+      e.preventDefault();
+
+      const username = $('#username').val().trim();
+      const email = $('#email').val().trim();
+      const password = $('#password').val();
+      const confirm = $('#confirm-password').val();
+      let valid = true;
+
+      if (!username || username.length < 3) {
+        $('#username').addClass('error');
+        $('#error-username').addClass('show');
+        valid = false;
+      } else {
+        $('#username').removeClass('error');
+        $('#error-username').removeClass('show');
+      }
+
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        $('#email').addClass('error');
+        $('#error-email').addClass('show');
+        valid = false;
+      } else {
+        $('#email').removeClass('error');
+        $('#error-email').removeClass('show');
+      }
+
+      if (!password || password.length < 6) {
+        $('#password').addClass('error');
+        $('#error-password').addClass('show');
+        valid = false;
+      } else {
+        $('#password').removeClass('error');
+        $('#error-password').removeClass('show');
+      }
+
+      if (password !== confirm) {
+        $('#confirm-password').addClass('error');
+        $('#error-confirm').addClass('show');
+        valid = false;
+      } else {
+        $('#confirm-password').removeClass('error');
+        $('#error-confirm').removeClass('show');
+      }
+
+      if (!valid) return;
+
+      const $btn = $('#btn-register');
+      $btn.text('Creating legend...').prop('disabled', true);
+      $('#alert-error').removeClass('show');
+
+      try {
+        await apiRequest('/auth/register', 'POST', { username, email, password });
+        $('#alert-success').text('Account created! Redirecting to login...').addClass('show');
+        setTimeout(() => window.location.href = 'login.html', 1500);
+      } catch (err) {
+        $('#alert-error').text(err.message).addClass('show');
+        $btn.text('Begin Your Legend').prop('disabled', false);
+      }
+    });
+  </script>
+</body>
+</html>

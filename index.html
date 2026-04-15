@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Age of The Death — HERA</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 6rem 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 40%, rgba(123, 94, 167, 0.12) 0%, transparent 70%),
+        radial-gradient(ellipse 60% 40% at 20% 80%, rgba(58, 107, 138, 0.08) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 30% at 80% 20%, rgba(155, 111, 212, 0.06) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .hero-particles {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .particle {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: var(--accent-purple);
+      border-radius: 50%;
+      animation: float linear infinite;
+      opacity: 0;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(100vh) scale(0); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 0.6; }
+      100% { transform: translateY(-100px) scale(1.5); opacity: 0; }
+    }
+
+    .hero-eyebrow {
+      font-family: 'Cinzel', serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--accent-glow);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeInUp 0.8s ease 0.2s forwards;
+    }
+
+    .hero-title {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: clamp(2.5rem, 8vw, 6rem);
+      font-weight: 900;
+      line-height: 1.1;
+      color: var(--text-primary);
+      margin-bottom: 1.5rem;
+      animation: glow 4s ease-in-out infinite;
+      opacity: 0;
+      animation: fadeInUp 0.8s ease 0.4s forwards, glow 4s ease-in-out 1.5s infinite;
+    }
+
+    .hero-title span {
+      background: linear-gradient(135deg, var(--accent-glow), var(--accent-blue));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-subtitle {
+      font-family: 'Crimson Text', serif;
+      font-size: clamp(1rem, 2vw, 1.3rem);
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0 auto 3rem;
+      font-style: italic;
+      opacity: 0;
+      animation: fadeInUp 0.8s ease 0.6s forwards;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      opacity: 0;
+      animation: fadeInUp 0.8s ease 0.8s forwards;
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-muted);
+      font-family: 'Cinzel', serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      animation: fadeIn 1s ease 1.5s forwards;
+      opacity: 0;
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(180deg, var(--accent-purple), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; transform: scaleY(1); }
+      50% { opacity: 1; transform: scaleY(1.2); }
+    }
+
+    /* FEATURES */
+    .features {
+      padding: 6rem 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .section-eyebrow {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--accent-glow);
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: clamp(1.5rem, 4vw, 2.5rem);
+      color: var(--text-primary);
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .feature-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 2.5rem 2rem;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s, border-color 0.3s;
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 3px;
+      background: linear-gradient(90deg, var(--accent-purple), var(--accent-blue));
+      transform: scaleX(0);
+      transition: transform 0.3s;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--border-glow);
+    }
+
+    .feature-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .feature-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .feature-title {
+      font-family: 'Cinzel', serif;
+      font-size: 0.9rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-primary);
+      margin-bottom: 0.75rem;
+    }
+
+    .feature-desc {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    /* RANKINGS PREVIEW */
+    .rankings-preview {
+      padding: 6rem 2rem;
+      background: var(--bg-secondary);
+      position: relative;
+    }
+
+    .rankings-preview::before,
+    .rankings-preview::after {
+      content: '';
+      position: absolute;
+      left: 0; width: 100%; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+    }
+
+    .rankings-preview::before { top: 0; }
+    .rankings-preview::after { bottom: 0; }
+
+    .rankings-inner {
+      max-width: 700px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .ranking-teaser {
+      margin-top: 2rem;
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .ranking-teaser-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.2s;
+    }
+
+    .ranking-teaser-row:last-child {
+      border-bottom: none;
+    }
+
+    .ranking-teaser-row:hover {
+      background: rgba(123, 94, 167, 0.05);
+    }
+
+    .rank-num {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      min-width: 2rem;
+      text-align: center;
+    }
+
+    .rank-num.gold { color: var(--accent-gold); }
+    .rank-num.silver { color: #aaa; }
+    .rank-num.bronze { color: #cd7f32; }
+
+    .rank-avatar {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Cinzel', serif;
+      font-size: 0.8rem;
+      color: white;
+      flex-shrink: 0;
+    }
+
+    .rank-name {
+      flex: 1;
+      font-family: 'Cinzel', serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      color: var(--text-primary);
+    }
+
+    .rank-score {
+      font-family: 'Cinzel Decorative', serif;
+      color: var(--accent-glow);
+      font-size: 0.9rem;
+    }
+
+    /* CTA */
+    .cta-section {
+      padding: 8rem 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 80% at 50% 50%, rgba(123, 94, 167, 0.08) 0%, transparent 70%);
+    }
+
+    .cta-title {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: clamp(1.5rem, 4vw, 3rem);
+      margin-bottom: 1rem;
+      color: var(--text-primary);
+    }
+
+    .cta-subtitle {
+      color: var(--text-secondary);
+      font-style: italic;
+      margin-bottom: 3rem;
+      font-size: 1.1rem;
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <a href="index.html" class="nav-logo">
+      <img src="img/logo.png" alt="HERA" />
+      <span>Age of The Death</span>
+    </a>
+    <button class="hamburger" id="hamburger">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="ranking.html">Ranking</a></li>
+      <li id="nav-profile" style="display:none"><a href="perfil.html">Profile</a></li>
+      <li id="nav-username-li" style="display:none">
+        <span id="nav-username" style="font-family:'Cinzel',serif;font-size:0.75rem;color:var(--accent-glow);letter-spacing:0.1em;"></span>
+      </li>
+      <li id="nav-logout" style="display:none"><a href="#" class="btn-nav">Logout</a></li>
+      <li id="nav-login"><a href="login.html" class="btn-nav">Login</a></li>
+      <li id="nav-register"><a href="register.html">Register</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-particles" id="particles"></div>
+
+    <p class="hero-eyebrow">HERA Studio presents</p>
+    <h1 class="hero-title">Age of<br/><span>The Death</span></h1>
+    <p class="hero-subtitle">Enter the realm where legends are forged in darkness and glory awaits those who dare to defy death itself.</p>
+    <div class="hero-buttons">
+      <a href="register.html" class="btn-primary">Begin Your Journey</a>
+      <a href="ranking.html" class="btn-secondary">View Rankings</a>
+    </div>
+
+    <div class="hero-scroll">
+      <div class="scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features">
+    <div class="section-header">
+      <p class="section-eyebrow">What awaits you</p>
+      <h2 class="section-title">Enter the Darkness</h2>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <span class="feature-icon">⚔️</span>
+        <h3 class="feature-title">Intense Combat</h3>
+        <p class="feature-desc">Face relentless enemies across multiple levels of difficulty. Each battle tests your skill and reflexes to the limit.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">💀</span>
+        <h3 class="feature-title">Lives System</h3>
+        <p class="feature-desc">Every life is precious. Manage your resources wisely or face permanent consequences in this unforgiving world.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🏆</span>
+        <h3 class="feature-title">Global Rankings</h3>
+        <p class="feature-desc">Compete against players worldwide. Climb the leaderboard and prove you are the ultimate champion of death.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🎯</span>
+        <h3 class="feature-title">Difficulty Modes</h3>
+        <p class="feature-desc">Choose your fate: Easy, Medium or Hard. Each mode offers unique scoring multipliers and challenges.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🏅</span>
+        <h3 class="feature-title">Achievements</h3>
+        <p class="feature-desc">Unlock exclusive achievements as you master the game. Show off your trophies on your profile page.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">👤</span>
+        <h3 class="feature-title">Custom Profile</h3>
+        <p class="feature-desc">Create your identity with a custom avatar visible directly in the game. Your legend, your face.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- RANKINGS PREVIEW -->
+  <section class="rankings-preview">
+    <div class="rankings-inner">
+      <div class="section-header">
+        <p class="section-eyebrow">Hall of Fame</p>
+        <h2 class="section-title">Top Warriors</h2>
+      </div>
+      <div class="ranking-teaser" id="ranking-preview">
+        <div style="padding:2rem;color:var(--text-muted);font-family:'Cinzel',serif;font-size:0.8rem;letter-spacing:0.1em;">
+          Loading rankings...
+        </div>
+      </div>
+      <br/>
+      <a href="ranking.html" class="btn-secondary">View Full Ranking</a>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <h2 class="cta-title">Are You Ready?</h2>
+    <p class="cta-subtitle">Your destiny awaits in the Age of The Death.</p>
+    <a href="register.html" class="btn-primary">Create Account</a>
+  </section>
+
+  <footer>
+    <p>© 2026 HERA Studio — Age of The Death. All rights reserved.</p>
+  </footer>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    // Particles
+    const container = document.getElementById('particles');
+    for (let i = 0; i < 30; i++) {
+      const p = document.createElement('div');
+      p.className = 'particle';
+      p.style.left = Math.random() * 100 + '%';
+      p.style.animationDuration = (Math.random() * 10 + 8) + 's';
+      p.style.animationDelay = (Math.random() * 10) + 's';
+      p.style.width = p.style.height = (Math.random() * 3 + 1) + 'px';
+      container.appendChild(p);
+    }
+
+    // Load ranking preview
+    async function loadRankingPreview() {
+      try {
+        const data = await apiRequest('/scores/ranking');
+        if (!data.length) {
+          $('#ranking-preview').html('<div style="padding:2rem;color:var(--text-muted);font-family:\'Cinzel\',serif;font-size:0.8rem;letter-spacing:0.1em;text-align:center;">No rankings yet. Be the first!</div>');
+          return;
+        }
+        const medals = ['gold', 'silver', 'bronze'];
+        const html = data.slice(0, 5).map((item, i) => `
+          <div class="ranking-teaser-row">
+            <span class="rank-num ${medals[i] || ''}">${i + 1}</span>
+            <div class="rank-avatar">${item.userId?.username?.[0]?.toUpperCase() || '?'}</div>
+            <span class="rank-name">${item.userId?.username || 'Unknown'}</span>
+            <span class="rank-score">${item.score.toLocaleString()}</span>
+          </div>
+        `).join('');
+        $('#ranking-preview').html(html);
+      } catch (e) {
+        $('#ranking-preview').html('<div style="padding:2rem;color:var(--text-muted);font-family:\'Cinzel\',serif;font-size:0.8rem;letter-spacing:0.1em;text-align:center;">No rankings yet. Be the first!</div>');
+      }
+    }
+
+    loadRankingPreview();
+
+    // Scroll animation for feature cards
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          $(entry.target).css({ opacity: 1, transform: 'translateY(0)', transition: 'all 0.6s ease' });
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.feature-card').forEach((el, i) => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(30px)';
+      el.style.transitionDelay = (i * 0.1) + 's';
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>

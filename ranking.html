@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ranking — Age of The Death</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .ranking-page {
+      min-height: 100vh;
+      padding: 6rem 1.5rem 4rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .page-header {
+      text-align: center;
+      margin-bottom: 3rem;
+      opacity: 0;
+      animation: fadeInUp 0.7s ease 0.1s forwards;
+    }
+
+    .page-eyebrow {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--accent-glow);
+      margin-bottom: 0.75rem;
+    }
+
+    .page-title {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: clamp(1.8rem, 5vw, 3rem);
+      color: var(--text-primary);
+    }
+
+    /* FILTER TABS */
+    .filter-tabs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      opacity: 0;
+      animation: fadeInUp 0.7s ease 0.2s forwards;
+    }
+
+    .tab-btn {
+      font-family: 'Cinzel', serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 10px 24px;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .tab-btn:hover,
+    .tab-btn.active {
+      border-color: var(--accent-purple);
+      color: var(--accent-glow);
+      background: rgba(123, 94, 167, 0.1);
+    }
+
+    /* RANKING TABLE */
+    .ranking-container {
+      opacity: 0;
+      animation: fadeInUp 0.7s ease 0.3s forwards;
+    }
+
+    .ranking-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .ranking-table thead tr {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .ranking-table th {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      padding: 1rem 1.5rem;
+      text-align: left;
+    }
+
+    .ranking-table tbody tr {
+      border-bottom: 1px solid rgba(42, 32, 64, 0.5);
+      transition: background 0.2s;
+    }
+
+    .ranking-table tbody tr:hover {
+      background: rgba(123, 94, 167, 0.05);
+    }
+
+    .ranking-table td {
+      padding: 1rem 1.5rem;
+      vertical-align: middle;
+    }
+
+    .rank-position {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 1.1rem;
+      min-width: 3rem;
+      text-align: center;
+    }
+
+    .pos-1 { color: var(--accent-gold); text-shadow: 0 0 15px rgba(201, 168, 76, 0.5); }
+    .pos-2 { color: #c0c0c0; }
+    .pos-3 { color: #cd7f32; }
+    .pos-other { color: var(--text-muted); }
+
+    .player-info {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .player-avatar {
+      width: 42px; height: 42px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--border);
+      background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Cinzel', serif;
+      font-size: 0.9rem;
+      color: white;
+      flex-shrink: 0;
+    }
+
+    .player-avatar img {
+      width: 100%; height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .player-name {
+      font-family: 'Cinzel', serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+      color: var(--text-primary);
+    }
+
+    .score-value {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 1rem;
+      color: var(--accent-glow);
+    }
+
+    .difficulty-badge {
+      font-family: 'Cinzel', serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border: 1px solid;
+    }
+
+    .difficulty-badge.easy { color: #27ae60; border-color: #27ae60; background: rgba(39,174,96,0.1); }
+    .difficulty-badge.medium { color: #f1c40f; border-color: #f1c40f; background: rgba(241,196,15,0.1); }
+    .difficulty-badge.hard { color: #c0392b; border-color: #c0392b; background: rgba(192,57,43,0.1); }
+
+    .empty-state {
+      text-align: center;
+      padding: 4rem 2rem;
+      color: var(--text-muted);
+    }
+
+    .empty-state p {
+      font-family: 'Cinzel', serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      margin-top: 1rem;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 3rem;
+      color: var(--text-muted);
+      font-family: 'Cinzel', serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.2em;
+    }
+
+    @media (max-width: 600px) {
+      .ranking-table th:nth-child(4),
+      .ranking-table td:nth-child(4) { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <a href="index.html" class="nav-logo">
+      <img src="img/logo.png" alt="HERA" />
+      <span>Age of The Death</span>
+    </a>
+    <button class="hamburger" id="hamburger">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="ranking.html">Ranking</a></li>
+      <li id="nav-profile" style="display:none"><a href="perfil.html">Profile</a></li>
+      <li id="nav-username-li" style="display:none">
+        <span id="nav-username" style="font-family:'Cinzel',serif;font-size:0.75rem;color:var(--accent-glow);letter-spacing:0.1em;"></span>
+      </li>
+      <li id="nav-logout" style="display:none"><a href="#" class="btn-nav">Logout</a></li>
+      <li id="nav-login"><a href="login.html" class="btn-nav">Login</a></li>
+      <li id="nav-register"><a href="register.html">Register</a></li>
+    </ul>
+  </nav>
+
+  <main class="ranking-page">
+    <div class="page-header">
+      <p class="page-eyebrow">Hall of Fame</p>
+      <h1 class="page-title">Global Ranking</h1>
+    </div>
+
+    <div class="filter-tabs">
+      <button class="tab-btn active" data-filter="all">All</button>
+      <button class="tab-btn" data-filter="easy">Easy</button>
+      <button class="tab-btn" data-filter="medium">Medium</button>
+      <button class="tab-btn" data-filter="hard">Hard</button>
+    </div>
+
+    <div class="ranking-container">
+      <div id="ranking-content">
+        <div class="loading">Loading warriors...</div>
+      </div>
+    </div>
+  </main>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    let currentFilter = 'all';
+
+    function renderRanking(data) {
+      if (!data.length) {
+        $('#ranking-content').html(`
+          <div class="empty-state">
+            <div style="font-size:3rem">💀</div>
+            <p>No warriors have entered this realm yet.</p>
+          </div>
+        `);
+        return;
+      }
+
+      const posClass = (i) => i === 0 ? 'pos-1' : i === 1 ? 'pos-2' : i === 2 ? 'pos-3' : 'pos-other';
+      const posSymbol = (i) => i === 0 ? '👑' : i === 1 ? '⚔️' : i === 2 ? '🛡️' : (i + 1);
+
+      const rows = data.map((item, i) => {
+        const username = item.userId?.username || 'Unknown';
+        const avatar = item.userId?.avatar;
+        const avatarEl = avatar
+          ? `<div class="player-avatar"><img src="${avatar}" alt="${username}" /></div>`
+          : `<div class="player-avatar">${username[0].toUpperCase()}</div>`;
+
+        return `
+          <tr>
+            <td><span class="rank-position ${posClass(i)}">${posSymbol(i)}</span></td>
+            <td>
+              <div class="player-info">
+                ${avatarEl}
+                <span class="player-name">${username}</span>
+              </div>
+            </td>
+            <td><span class="score-value">${item.score.toLocaleString()}</span></td>
+            <td><span class="difficulty-badge ${item.difficulty}">${item.difficulty}</span></td>
+          </tr>
+        `;
+      }).join('');
+
+      $('#ranking-content').html(`
+        <table class="ranking-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Warrior</th>
+              <th>Score</th>
+              <th>Difficulty</th>
+            </tr>
+          </thead>
+          <tbody>${rows}</tbody>
+        </table>
+      `);
+    }
+
+    async function loadRanking(filter) {
+      $('#ranking-content').html('<div class="loading">Loading warriors...</div>');
+      try {
+        let data;
+        if (filter === 'all') {
+          data = await apiRequest('/scores/ranking');
+        } else {
+          data = await apiRequest(`/scores/ranking/${filter}`);
+        }
+        renderRanking(data);
+      } catch (e) {
+        $('#ranking-content').html('<div class="loading">Error loading rankings.</div>');
+      }
+    }
+
+    $('.tab-btn').on('click', function () {
+      $('.tab-btn').removeClass('active');
+      $(this).addClass('active');
+      currentFilter = $(this).data('filter');
+      loadRanking(currentFilter);
+    });
+
+    loadRanking('all');
+  </script>
+</body>
+</html>
