@@ -1,0 +1,127 @@
+/* ═══════════════════════════════════════════════
+   profile.css — Age of The Dead · Profile Page
+   ═══════════════════════════════════════════════ */
+
+.profile-wrap {
+  max-width: 960px; margin: 0 auto; padding: 2rem 2rem 4rem;
+}
+
+/* ─── HEADER CARD ─── */
+.profile-header-card {
+  background: var(--bg-card); border: 1px solid var(--border-subtle);
+  border-radius: 14px; overflow: hidden; margin-bottom: 2rem;
+  box-shadow: 0 8px 40px rgba(0,0,0,.3);
+}
+.profile-cover {
+  height: 90px;
+  background: linear-gradient(135deg, rgba(107,33,168,.45) 0%, rgba(13,148,136,.25) 60%, rgba(139,0,0,.15) 100%);
+}
+.profile-info-row {
+  display: flex; align-items: flex-end; gap: 1.75rem;
+  padding: 0 2rem 1.75rem; margin-top: -44px;
+}
+.avatar-zone { display: flex; flex-direction: column; align-items: center; gap: .45rem; flex-shrink: 0; }
+.big-avatar {
+  width: 90px; height: 90px; border-radius: 50%;
+  border: 3px solid var(--purple-bright);
+  background: var(--bg-card2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2.4rem; overflow: hidden;
+  box-shadow: 0 0 24px rgba(168,85,247,.35);
+}
+.avatar-change-btn {
+  font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: .72rem;
+  letter-spacing: .07em; text-transform: uppercase;
+  color: var(--text-dim); background: transparent; border: 1px solid var(--border-subtle);
+  padding: .2rem .65rem; border-radius: 20px; cursor: pointer; transition: all .2s;
+}
+.avatar-change-btn:hover { color: var(--purple-bright); border-color: var(--border-glow); }
+
+.profile-meta { flex: 1; padding-bottom: .25rem; }
+.profile-name {
+  font-family: 'Cinzel', serif; font-size: 1.65rem; font-weight: 700;
+  color: var(--text-primary); line-height: 1.1;
+}
+.profile-role-tag {
+  font-size: .82rem; color: var(--teal-bright); letter-spacing: .1em;
+  text-transform: uppercase; margin-top: .2rem;
+}
+.profile-joined { font-size: .78rem; color: var(--text-dim); margin-top: .3rem; }
+.profile-badges { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .7rem; }
+
+/* ─── GRID ─── */
+.profile-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+.profile-left, .profile-right { display: flex; flex-direction: column; }
+
+/* ─── STATS ─── */
+.stat-list { display: flex; flex-direction: column; }
+.stat-item {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: .6rem 0; border-bottom: 1px solid var(--border-subtle);
+}
+.stat-item:last-child { border-bottom: none; }
+.stat-label { font-size: .86rem; color: var(--text-secondary); }
+.stat-val {
+  font-family: 'Bebas Neue', sans-serif; font-size: 1.15rem;
+  color: var(--purple-bright); letter-spacing: .04em;
+}
+.stat-val.gold { color: var(--gold-bright); }
+
+/* ─── SCORE HISTORY ─── */
+.score-row {
+  display: grid; grid-template-columns: 90px 70px 80px 1fr;
+  align-items: center; padding: .6rem 0;
+  border-bottom: 1px solid var(--border-subtle);
+  font-size: .88rem;
+}
+.score-row:last-child { border-bottom: none; }
+.score-date { color: var(--text-dim); }
+.score-diff {
+  font-size: .72rem; font-weight: 700; letter-spacing: .05em;
+  text-transform: uppercase; padding: .15rem .5rem; border-radius: 4px;
+}
+.diff-easy   { background: rgba(45,212,191,.1); color: var(--teal-bright); }
+.diff-medium { background: rgba(212,160,23,.1); color: var(--gold-bright); }
+.diff-hard   { background: rgba(239,68,68,.1);  color: var(--red-bright); }
+.score-wave  { color: var(--text-secondary); }
+.score-val   { font-family: 'Bebas Neue', sans-serif; font-size: 1.05rem; color: var(--purple-bright); text-align: right; }
+
+/* ─── DANGER ─── */
+.danger-card { border-color: rgba(239,68,68,.18) !important; }
+.danger-card .card-title::before { background: var(--red-bright) !important; }
+
+/* ═══════════════════════════════════════════════
+   RESPONSIVE — profile.css
+   ═══════════════════════════════════════════════ */
+
+@media (max-width: 900px) {
+  .profile-wrap {
+    padding: 1.5rem 1.25rem 3rem;
+  }
+  .profile-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .profile-info-row {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: .85rem;
+    padding: 0 1rem 1.5rem;
+    margin-top: -38px;
+  }
+  .profile-name {
+    font-size: 1.35rem;
+  }
+  .profile-badges {
+    justify-content: center;
+  }
+  .score-row {
+    grid-template-columns: 80px 65px 1fr;
+  }
+  .score-row > *:nth-child(3) {
+    display: none;
+  }
+}

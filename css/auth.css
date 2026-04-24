@@ -1,0 +1,38 @@
+/* ═══════════════════════════════════════════════
+   auth.css — Age of The Dead · Auth Pages
+   ═══════════════════════════════════════════════ */
+
+.auth-bg {
+  display: flex; align-items: center; justify-content: center;
+  min-height: 100vh; padding: 2rem 1rem;
+  background:
+    radial-gradient(ellipse 65% 50% at 25% 50%, rgba(107,33,168,.14) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 40% at 80% 60%, rgba(13,148,136,.08) 0%, transparent 55%),
+    var(--bg-deep);
+}
+.auth-wrap { width: 100%; max-width: 440px; }
+.auth-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 14px; padding: 2.5rem 2.25rem;
+  box-shadow: 0 0 60px rgba(168,85,247,.07), 0 20px 40px rgba(0,0,0,.4);
+}
+.auth-header { text-align: center; margin-bottom: 2rem; }
+.auth-title {
+  font-family: 'Cinzel', serif; font-size: 1.55rem; font-weight: 700;
+  color: var(--text-primary);
+}
+.auth-sub { font-size: .88rem; color: var(--text-dim); margin-top: .35rem; }
+
+/* Avatar picker on register */
+.avatar-preview-wrap { display: flex; align-items: center; gap: 1rem; }
+.avatar-preview-box {
+  width: 88px; height: 88px; border-radius: 10px;
+  background: var(--bg-card2); border: 2px dashed var(--border-glow);
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center; cursor: pointer; gap: .25rem;
+  transition: border-color .2s, background .2s; flex-shrink: 0;
+}
+.avatar-preview-box:hover { background: rgba(168,85,247,.08); border-color: var(--purple-bright); }
+.avatar-preview-box span  { font-size: 1.8rem; }
+.avatar-preview-box small { font-size: .68rem; color: var(--text-dim); text-align: center; }

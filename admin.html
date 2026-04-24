@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Age of The Dead — Register</title>
+<title>Age of The Dead — Admin</title>
 <link rel="stylesheet" href="css/base.css">
-<link rel="stylesheet" href="css/auth.css">
+<link rel="stylesheet" href="css/admin.css">
 </head>
 <body>
 <nav>
@@ -16,59 +16,151 @@
   <div class="nav-links">
     <a href="index.html" data-en="Home" data-es="Inicio">Home</a>
     <a href="leaderboard.html" data-en="Leaderboard" data-es="Ranking">Leaderboard</a>
+    <a href="profile.html" data-en="Profile" data-es="Perfil">Profile</a>
+    <a href="admin.html" class="active" data-en="Admin" data-es="Admin">Admin</a>
   </div>
   <div class="nav-right">
     <button id="lang-btn" onclick="toggleLang()">EN / ES</button>
-    <a href="login.html" class="btn btn-outline" data-en="Sign In" data-es="Entrar">Sign In</a>
+    <button class="btn btn-outline" onclick="AuthAPI.logout()" data-en="Log Out" data-es="Salir">Log Out</button>
   </div>
 </nav>
 
-<div class="page-wrap auth-bg">
-  <div class="auth-wrap fade-in">
-    <div class="auth-card">
-      <div class="auth-header">
-        <div class="auth-title" data-en="Create Account" data-es="Crear Cuenta">Create Account</div>
-        <div class="auth-sub" data-en="Join the fight. Claim your place on the board." data-es="Únete a la lucha. Reclama tu lugar en el ranking.">Join the fight. Claim your place on the board.</div>
-      </div>
+<div class="page-wrap">
+  <div class="admin-layout">
 
-      <div class="form-group">
-        <label data-en="Username" data-es="Usuario">Username</label>
-        <input type="text" id="reg-user" placeholder="DeadSlayer99" maxlength="20">
-        <span class="form-error" id="err-user"></span>
+    <!-- SIDEBAR -->
+    <aside class="admin-sidebar">
+      <div class="sidebar-group">
+        <div class="sidebar-label" data-en="Dashboard" data-es="Panel">Dashboard</div>
+        <div class="sidebar-link active" onclick="showSection('overview')" data-en="📊 Overview" data-es="📊 Vista General">📊 Overview</div>
+        <div class="sidebar-link" onclick="showSection('users')" data-en="👤 Users" data-es="👤 Usuarios">👤 Users</div>
+        <div class="sidebar-link" onclick="showSection('scores')" data-en="🏆 Scores" data-es="🏆 Puntuaciones">🏆 Scores</div>
       </div>
-      <div class="form-group">
-        <label data-en="Email" data-es="Email">Email</label>
-        <input type="email" id="reg-email" placeholder="you@example.com">
-        <span class="form-error" id="err-email"></span>
+      <div class="sidebar-group">
+        <div class="sidebar-label" data-en="Navigation" data-es="Navegación">Navigation</div>
+        <div class="sidebar-link" onclick="window.location.href='index.html'" data-en="🏠 Back to Site" data-es="🏠 Volver">🏠 Back to Site</div>
+        <div class="sidebar-link" onclick="AuthAPI.logout()" data-en="🚪 Log Out" data-es="🚪 Salir">🚪 Log Out</div>
       </div>
-      <div class="form-group">
-        <label data-en="Password" data-es="Contraseña">Password</label>
-        <input type="password" id="reg-pass" placeholder="Min. 8 characters">
-        <span class="form-error" id="err-pass"></span>
-      </div>
-      <div class="form-group">
-        <label data-en="Confirm Password" data-es="Confirmar Contraseña">Confirm Password</label>
-        <input type="password" id="reg-pass2" placeholder="Repeat password">
-        <span class="form-error" id="err-pass2"></span>
-      </div>
+    </aside>
 
-      <div class="form-group">
-        <label data-en="Avatar (optional)" data-es="Avatar (opcional)">Avatar (optional)</label>
-        <div class="avatar-preview-wrap">
-          <div class="avatar-preview-box" id="avatar-preview" onclick="document.getElementById('reg-avatar').click()">
-            <span>🧟</span>
-            <small data-en="Click to upload" data-es="Click para subir">Click to upload</small>
+    <!-- MAIN CONTENT -->
+    <div class="admin-main">
+
+      <!-- OVERVIEW SECTION -->
+      <div id="section-overview" class="admin-section fade-in">
+        <div class="admin-page-header">
+          <h2 data-en="Admin Dashboard" data-es="Panel de Administración">Admin Dashboard</h2>
+          <p data-en="Age of The Dead — Platform Overview" data-es="Age of The Dead — Vista General">Age of The Dead — Platform Overview</p>
+        </div>
+        <div class="stats-grid" id="overview-stats">
+          <div class="stat-card"><div class="stat-icon icon-purple">👤</div><div><div class="stat-big" id="ov-users">—</div><div class="stat-lbl" data-en="Total Users" data-es="Usuarios">Total Users</div></div></div>
+          <div class="stat-card"><div class="stat-icon icon-teal">🏆</div><div><div class="stat-big" id="ov-scores">—</div><div class="stat-lbl" data-en="Total Scores" data-es="Puntuaciones">Total Scores</div></div></div>
+          <div class="stat-card"><div class="stat-icon icon-gold">🎮</div><div><div class="stat-big" id="ov-top">—</div><div class="stat-lbl" data-en="Top Score" data-es="Mejor Puntuación">Top Score</div></div></div>
+          <div class="stat-card"><div class="stat-icon icon-red">⚙️</div><div><div class="stat-big" id="ov-admins">—</div><div class="stat-lbl" data-en="Admins" data-es="Admins">Admins</div></div></div>
+        </div>
+
+        <!-- Recent users preview -->
+        <div class="admin-card" style="margin-top:2rem">
+          <div class="admin-card-header">
+            <span class="admin-card-title" data-en="Recent Users" data-es="Usuarios Recientes">Recent Users</span>
+            <button class="btn btn-outline" style="padding:.28rem .75rem;font-size:.76rem" onclick="showSection('users')" data-en="View All →" data-es="Ver Todos →">View All →</button>
           </div>
-          <input type="file" id="reg-avatar" accept="image/png,image/jpeg,image/webp" style="display:none" onchange="previewAvatar(event)">
+          <div id="overview-recent-users"><div style="padding:1.5rem;text-align:center"><span class="spinner"></span></div></div>
         </div>
       </div>
 
-      <button class="btn btn-primary btn-block" id="btn-reg" onclick="doRegister()" data-en="⚔️ Create Account" data-es="⚔️ Crear Cuenta">⚔️ Create Account</button>
-
-      <div class="form-footer">
-        <span data-en="Already have an account? " data-es="¿Ya tienes cuenta? ">Already have an account? </span>
-        <a href="login.html" data-en="Sign In" data-es="Entrar">Sign In</a>
+      <!-- USERS SECTION -->
+      <div id="section-users" class="admin-section" style="display:none">
+        <div class="admin-page-header">
+          <h2 data-en="User Management" data-es="Gestión de Usuarios">User Management</h2>
+          <p data-en="View and manage all registered users" data-es="Ver y gestionar todos los usuarios registrados">View and manage all registered users</p>
+        </div>
+        <div class="admin-card">
+          <div class="admin-card-header">
+            <span class="admin-card-title" data-en="All Users" data-es="Todos los Usuarios">All Users</span>
+            <div style="display:flex;gap:.5rem;align-items:center">
+              <input type="text" id="user-search" placeholder="Search..." style="width:160px;padding:.32rem .7rem;font-size:.82rem" oninput="filterUsers()">
+              <button class="btn btn-primary" style="padding:.32rem .75rem;font-size:.76rem" onclick="loadUsers()" data-en="↻ Refresh" data-es="↻ Actualizar">↻ Refresh</button>
+            </div>
+          </div>
+          <div class="table-scroll">
+            <table id="users-table">
+              <thead>
+                <tr>
+                  <th data-en="Username" data-es="Usuario">Username</th>
+                  <th data-en="Email" data-es="Email">Email</th>
+                  <th data-en="Role" data-es="Rol">Role</th>
+                  <th data-en="Joined" data-es="Registro">Joined</th>
+                  <th data-en="Last Login" data-es="Último Acceso">Last Login</th>
+                  <th data-en="Actions" data-es="Acciones">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="users-tbody">
+                <tr><td colspan="6" style="text-align:center;padding:2rem;color:var(--text-dim)"><span class="spinner"></span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
+
+      <!-- SCORES SECTION -->
+      <div id="section-scores" class="admin-section" style="display:none">
+        <div class="admin-page-header">
+          <h2 data-en="Score Records" data-es="Registro de Puntuaciones">Score Records</h2>
+          <p data-en="Top scores across all difficulties" data-es="Mejores puntuaciones en todas las dificultades">Top scores across all difficulties</p>
+        </div>
+        <div class="admin-card">
+          <div class="admin-card-header">
+            <span class="admin-card-title" data-en="Top 10 Global" data-es="Top 10 Global">Top 10 Global</span>
+            <button class="btn btn-outline" style="padding:.28rem .75rem;font-size:.76rem" onclick="loadScoresSection()" data-en="↻ Refresh" data-es="↻ Actualizar">↻ Refresh</button>
+          </div>
+          <div class="table-scroll">
+            <table>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th data-en="Player" data-es="Jugador">Player</th>
+                  <th data-en="Score" data-es="Puntuación">Score</th>
+                  <th data-en="Wave" data-es="Oleada">Wave</th>
+                  <th data-en="Difficulty" data-es="Dificultad">Difficulty</th>
+                  <th data-en="Date" data-es="Fecha">Date</th>
+                </tr>
+              </thead>
+              <tbody id="scores-tbody">
+                <tr><td colspan="6" style="text-align:center;padding:2rem;color:var(--text-dim)"><span class="spinner"></span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end admin-main -->
+  </div>
+</div>
+
+<!-- EDIT USER MODAL -->
+<div class="modal-overlay" id="edit-modal" style="display:none" onclick="closeModal(event)">
+  <div class="modal-box">
+    <div class="modal-title" data-en="Edit User" data-es="Editar Usuario">Edit User</div>
+    <input type="hidden" id="edit-user-id">
+    <div class="form-group">
+      <label data-en="Username" data-es="Usuario">Username</label>
+      <input type="text" id="edit-user-username">
+    </div>
+    <div class="form-group">
+      <label data-en="Email" data-es="Email">Email</label>
+      <input type="email" id="edit-user-email">
+    </div>
+    <div class="form-group">
+      <label data-en="Role" data-es="Rol">Role</label>
+      <select id="edit-user-role">
+        <option value="user">User</option>
+        <option value="admin">Admin</option>
+      </select>
+    </div>
+    <div style="display:flex;gap:.75rem;justify-content:flex-end;margin-top:1.25rem">
+      <button class="btn btn-outline" onclick="document.getElementById('edit-modal').style.display='none'" data-en="Cancel" data-es="Cancelar">Cancel</button>
+      <button class="btn btn-primary" onclick="saveUser()" data-en="Save" data-es="Guardar">Save</button>
     </div>
   </div>
 </div>
@@ -76,58 +168,133 @@
 <div class="toast" id="toast"></div>
 <script src="js/api.js"></script>
 <script>
-if(Auth.isLoggedIn()) window.location.href = 'profile.html';
+// Guard: must be admin
+if(!Auth.isLoggedIn()) window.location.href = 'login.html';
+if(!Auth.isAdmin())   { showToast && showToast('Admin only','error'); /* graceful */ }
 
-let avatarBase64 = '';
+let allUsers = [];
 
-function previewAvatar(e){
-  const file = e.target.files[0];
-  if(!file) return;
-  const reader = new FileReader();
-  reader.onload = ev => {
-    avatarBase64 = ev.target.result; // full data:image base64
-    const box = document.getElementById('avatar-preview');
-    box.innerHTML = `<img src="${avatarBase64}" style="width:100%;height:100%;object-fit:cover;border-radius:8px">`;
-  };
-  reader.readAsDataURL(file);
+function showSection(id){
+  document.querySelectorAll('.admin-section').forEach(s => s.style.display = 'none');
+  document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+  document.getElementById('section-'+id).style.display = '';
+  event.currentTarget.classList.add('active');
+  if(id === 'users')  loadUsers();
+  if(id === 'scores') loadScoresSection();
+  if(id === 'overview') loadOverview();
 }
 
-async function doRegister(){
-  // Clear errors
-  ['user','email','pass','pass2'].forEach(f => document.getElementById('err-'+f).textContent = '');
-
-  const username = document.getElementById('reg-user').value.trim();
-  const email    = document.getElementById('reg-email').value.trim();
-  const pass     = document.getElementById('reg-pass').value;
-  const pass2    = document.getElementById('reg-pass2').value;
-
-  let valid = true;
-  if(!username){ document.getElementById('err-user').textContent = 'Username required'; valid=false; }
-  if(!email)   { document.getElementById('err-email').textContent = 'Email required'; valid=false; }
-  if(pass.length < 8){ document.getElementById('err-pass').textContent = 'Minimum 8 characters'; valid=false; }
-  if(pass !== pass2) { document.getElementById('err-pass2').textContent = 'Passwords do not match'; valid=false; }
-  if(!valid) return;
-
-  const btn = document.getElementById('btn-reg');
-  btn.disabled = true; btn.innerHTML = '<span class="spinner"></span>';
-
+async function loadOverview(){
   try {
-    await AuthAPI.register(username, email, pass);
-    // Auto login after register
-    await AuthAPI.login(email, pass);
-    // Upload avatar if provided
-    if(avatarBase64){
-      try { await AuthAPI.updateAvatar(avatarBase64); } catch(_){}
-    }
-    showToast('Account created! Welcome!','success');
-    setTimeout(() => window.location.href = 'profile.html', 900);
+    const [users, ranking] = await Promise.all([AdminAPI.getUsers(), ScoresAPI.getRanking()]);
+    document.getElementById('ov-users').textContent   = users.length;
+    document.getElementById('ov-scores').textContent  = ranking.length;
+    document.getElementById('ov-top').textContent     = ranking.length ? ranking[0].score.toLocaleString() : '0';
+    document.getElementById('ov-admins').textContent  = users.filter(u=>u.role==='admin').length;
+
+    // Recent 5 users
+    const el = document.getElementById('overview-recent-users');
+    el.innerHTML = '<table><thead><tr><th>Username</th><th>Email</th><th>Role</th><th>Joined</th></tr></thead><tbody>'
+      + users.slice(0,5).map(u => `<tr>
+          <td>${u.username}</td><td>${u.email}</td>
+          <td><span class="role-badge role-${u.role}">${u.role}</span></td>
+          <td>${new Date(u.createdAt).toLocaleDateString()}</td>
+        </tr>`).join('')
+      + '</tbody></table>';
   } catch(e){
-    showToast(e.message || 'Registration failed','error');
-    btn.disabled = false;
-    btn.setAttribute('data-en','⚔️ Create Account');
-    btn.textContent = '⚔️ Create Account';
+    showToast('Could not load overview. Are you admin?','error');
   }
 }
+
+async function loadUsers(){
+  const tbody = document.getElementById('users-tbody');
+  tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:2rem"><span class="spinner"></span></td></tr>';
+  try {
+    allUsers = await AdminAPI.getUsers();
+    renderUsers(allUsers);
+  } catch(e){
+    tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:2rem;color:var(--red-bright)">${e.message}</td></tr>`;
+  }
+}
+
+function renderUsers(users){
+  const tbody = document.getElementById('users-tbody');
+  if(!users.length){ tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:2rem;color:var(--text-dim)">No users found</td></tr>'; return; }
+  tbody.innerHTML = users.map(u => `
+    <tr>
+      <td><strong>${u.username}</strong></td>
+      <td>${u.email}</td>
+      <td><span class="role-badge role-${u.role}">${u.role}</span></td>
+      <td>${new Date(u.createdAt).toLocaleDateString()}</td>
+      <td>${u.lastLogin ? new Date(u.lastLogin).toLocaleDateString() : '—'}</td>
+      <td>
+        <div class="action-row">
+          <button class="action-btn action-edit" onclick="openEditModal('${u._id}','${u.username}','${u.email}','${u.role}')" data-en="Edit" data-es="Editar">Edit</button>
+          <button class="action-btn action-del" onclick="deleteUser('${u._id}','${u.username}')" data-en="Delete" data-es="Borrar">Delete</button>
+        </div>
+      </td>
+    </tr>`).join('');
+}
+
+function filterUsers(){
+  const q = document.getElementById('user-search').value.toLowerCase();
+  renderUsers(allUsers.filter(u => u.username.toLowerCase().includes(q) || u.email.toLowerCase().includes(q)));
+}
+
+function openEditModal(id, username, email, role){
+  document.getElementById('edit-user-id').value       = id;
+  document.getElementById('edit-user-username').value = username;
+  document.getElementById('edit-user-email').value    = email;
+  document.getElementById('edit-user-role').value     = role;
+  document.getElementById('edit-modal').style.display = 'flex';
+}
+function closeModal(e){ if(e.target === document.getElementById('edit-modal')) document.getElementById('edit-modal').style.display='none'; }
+
+async function saveUser(){
+  const id   = document.getElementById('edit-user-id').value;
+  const u    = document.getElementById('edit-user-username').value.trim();
+  const em   = document.getElementById('edit-user-email').value.trim();
+  const role = document.getElementById('edit-user-role').value;
+  try {
+    await AdminAPI.updateUser(id, u, em, role);
+    document.getElementById('edit-modal').style.display='none';
+    showToast('User updated!','success');
+    loadUsers();
+  } catch(e){ showToast(e.message,'error'); }
+}
+
+async function deleteUser(id, name){
+  if(!confirm(`Delete user "${name}"? This cannot be undone.`)) return;
+  try {
+    await AdminAPI.deleteUser(id);
+    showToast('User deleted','success');
+    loadUsers();
+  } catch(e){ showToast(e.message,'error'); }
+}
+
+async function loadScoresSection(){
+  const tbody = document.getElementById('scores-tbody');
+  tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:2rem"><span class="spinner"></span></td></tr>';
+  try {
+    const ranking = await ScoresAPI.getRanking();
+    if(!ranking.length){ tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:2rem;color:var(--text-dim)">No scores yet</td></tr>'; return; }
+    const medals = ['👑','🥈','🥉'];
+    tbody.innerHTML = ranking.map((s,i) => `
+      <tr>
+        <td><span class="lb-rank-sm ${i<3?'top':'n'}">${i<3?medals[i]:i+1}</span></td>
+        <td><strong>${s.userId?.username || 'Unknown'}</strong></td>
+        <td style="font-family:'Bebas Neue',sans-serif;font-size:1.1rem;color:var(--purple-bright)">${s.score.toLocaleString()}</td>
+        <td style="color:var(--teal-bright)">${s.level}</td>
+        <td><span class="diff-tag diff-${s.difficulty}">${s.difficulty}</span></td>
+        <td style="color:var(--text-dim)">${new Date(s.createdAt).toLocaleDateString()}</td>
+      </tr>`).join('');
+  } catch(e){
+    tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:2rem;color:var(--red-bright)">${e.message}</td></tr>`;
+  }
+}
+
+// Init
+loadOverview();
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="js/interactions.js"></script>

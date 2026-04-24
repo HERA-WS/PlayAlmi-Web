@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Age of The Dead — Register</title>
+<title>Age of The Dead — Profile</title>
 <link rel="stylesheet" href="css/base.css">
-<link rel="stylesheet" href="css/auth.css">
+<link rel="stylesheet" href="css/profile.css">
 </head>
 <body>
 <nav>
@@ -16,58 +16,106 @@
   <div class="nav-links">
     <a href="index.html" data-en="Home" data-es="Inicio">Home</a>
     <a href="leaderboard.html" data-en="Leaderboard" data-es="Ranking">Leaderboard</a>
+    <a href="manual.html" data-en="Manual" data-es="Manual">Manual</a>
+    <a href="gallery.html" data-en="Gallery" data-es="Galería">Gallery</a>
+    <a href="profile.html" class="active" id="nav-profile-btn" style="display:none" data-en="Profile" data-es="Perfil">Profile</a>
+    <a href="admin.html" id="nav-admin-btn" style="display:none" data-en="Admin" data-es="Admin">Admin</a>
   </div>
   <div class="nav-right">
     <button id="lang-btn" onclick="toggleLang()">EN / ES</button>
-    <a href="login.html" class="btn btn-outline" data-en="Sign In" data-es="Entrar">Sign In</a>
+    <a href="login.html" id="nav-login-btn" class="btn btn-outline" data-en="Sign In" data-es="Entrar">Sign In</a>
+    <a href="register.html" id="nav-register-btn" class="btn btn-primary" data-en="Play Now" data-es="Jugar">Play Now</a>
+    <button id="nav-logout-btn" style="display:none" class="btn btn-outline" onclick="AuthAPI.logout()" data-en="Log Out" data-es="Salir">Log Out</button>
   </div>
 </nav>
 
-<div class="page-wrap auth-bg">
-  <div class="auth-wrap fade-in">
-    <div class="auth-card">
-      <div class="auth-header">
-        <div class="auth-title" data-en="Create Account" data-es="Crear Cuenta">Create Account</div>
-        <div class="auth-sub" data-en="Join the fight. Claim your place on the board." data-es="Únete a la lucha. Reclama tu lugar en el ranking.">Join the fight. Claim your place on the board.</div>
-      </div>
+<div class="page-wrap">
+  <div class="profile-wrap">
 
-      <div class="form-group">
-        <label data-en="Username" data-es="Usuario">Username</label>
-        <input type="text" id="reg-user" placeholder="DeadSlayer99" maxlength="20">
-        <span class="form-error" id="err-user"></span>
+    <!-- PROFILE HEADER CARD -->
+    <div class="profile-header-card fade-in" id="profile-header-card">
+      <div class="profile-cover"></div>
+      <div class="profile-info-row">
+        <div class="avatar-zone">
+          <div class="big-avatar" id="big-avatar">🧟</div>
+          <button class="avatar-change-btn" onclick="document.getElementById('av-upload').click()" data-en="Change" data-es="Cambiar">Change</button>
+          <input type="file" id="av-upload" accept="image/*" style="display:none" onchange="uploadAvatar(event)">
+        </div>
+        <div class="profile-meta">
+          <h1 class="profile-name" id="p-username">Loading...</h1>
+          <div class="profile-role-tag" id="p-role">—</div>
+          <div class="profile-joined" id="p-joined">—</div>
+          <div class="profile-badges" id="p-badges"></div>
+        </div>
       </div>
-      <div class="form-group">
-        <label data-en="Email" data-es="Email">Email</label>
-        <input type="email" id="reg-email" placeholder="you@example.com">
-        <span class="form-error" id="err-email"></span>
-      </div>
-      <div class="form-group">
-        <label data-en="Password" data-es="Contraseña">Password</label>
-        <input type="password" id="reg-pass" placeholder="Min. 8 characters">
-        <span class="form-error" id="err-pass"></span>
-      </div>
-      <div class="form-group">
-        <label data-en="Confirm Password" data-es="Confirmar Contraseña">Confirm Password</label>
-        <input type="password" id="reg-pass2" placeholder="Repeat password">
-        <span class="form-error" id="err-pass2"></span>
-      </div>
+    </div>
 
-      <div class="form-group">
-        <label data-en="Avatar (optional)" data-es="Avatar (opcional)">Avatar (optional)</label>
-        <div class="avatar-preview-wrap">
-          <div class="avatar-preview-box" id="avatar-preview" onclick="document.getElementById('reg-avatar').click()">
-            <span>🧟</span>
-            <small data-en="Click to upload" data-es="Click para subir">Click to upload</small>
+    <div class="profile-grid fade-in-2">
+
+      <!-- LEFT COLUMN -->
+      <div class="profile-left">
+
+        <!-- GAME STATS -->
+        <div class="card" style="margin-bottom:1.5rem">
+          <div class="card-title" data-en="Game Stats" data-es="Estadísticas">Game Stats</div>
+          <div class="stat-list" id="stat-list">
+            <div class="stat-item"><span class="stat-label" data-en="Best Score" data-es="Mejor Punt.">Best Score</span><span class="stat-val" id="st-best">—</span></div>
+            <div class="stat-item"><span class="stat-label" data-en="Global Rank" data-es="Rank Global">Global Rank</span><span class="stat-val gold" id="st-rank">—</span></div>
+            <div class="stat-item"><span class="stat-label" data-en="Total Matches" data-es="Partidas">Total Matches</span><span class="stat-val" id="st-matches">—</span></div>
+            <div class="stat-item"><span class="stat-label" data-en="Highest Wave" data-es="Oleada Máx.">Highest Wave</span><span class="stat-val" id="st-wave">—</span></div>
           </div>
-          <input type="file" id="reg-avatar" accept="image/png,image/jpeg,image/webp" style="display:none" onchange="previewAvatar(event)">
+        </div>
+
+        <!-- EDIT PROFILE -->
+        <div class="card" style="margin-bottom:1.5rem">
+          <div class="card-title" data-en="Edit Profile" data-es="Editar Perfil">Edit Profile</div>
+          <div class="form-group">
+            <label data-en="Username" data-es="Usuario">Username</label>
+            <input type="text" id="edit-username">
+          </div>
+          <div class="form-group">
+            <label data-en="Email" data-es="Email">Email</label>
+            <input type="email" id="edit-email">
+          </div>
+          <button class="btn btn-primary" onclick="saveProfile()" data-en="Save Changes" data-es="Guardar Cambios">Save Changes</button>
+        </div>
+
+        <!-- CHANGE PASSWORD -->
+        <div class="card">
+          <div class="card-title" data-en="Change Password" data-es="Cambiar Contraseña">Change Password</div>
+          <div class="form-group">
+            <label data-en="Current Password" data-es="Contraseña Actual">Current Password</label>
+            <input type="password" id="cur-pass" placeholder="••••••••">
+          </div>
+          <div class="form-group">
+            <label data-en="New Password" data-es="Nueva Contraseña">New Password</label>
+            <input type="password" id="new-pass" placeholder="Min. 8 characters">
+          </div>
+          <div class="form-group">
+            <label data-en="Confirm New" data-es="Confirmar Nueva">Confirm New</label>
+            <input type="password" id="new-pass2" placeholder="Repeat">
+          </div>
+          <button class="btn btn-outline" onclick="changePass()" data-en="Update Password" data-es="Actualizar Contraseña">Update Password</button>
         </div>
       </div>
 
-      <button class="btn btn-primary btn-block" id="btn-reg" onclick="doRegister()" data-en="⚔️ Create Account" data-es="⚔️ Crear Cuenta">⚔️ Create Account</button>
+      <!-- RIGHT COLUMN -->
+      <div class="profile-right">
+        <div class="card">
+          <div class="card-title" data-en="Score History" data-es="Historial de Puntuaciones">Score History</div>
+          <div id="score-history-list">
+            <div style="text-align:center;padding:2rem;color:var(--text-dim)">
+              <span class="spinner"></span>
+            </div>
+          </div>
+        </div>
 
-      <div class="form-footer">
-        <span data-en="Already have an account? " data-es="¿Ya tienes cuenta? ">Already have an account? </span>
-        <a href="login.html" data-en="Sign In" data-es="Entrar">Sign In</a>
+        <!-- DANGER ZONE -->
+        <div class="card danger-card" style="margin-top:1.5rem">
+          <div class="card-title" style="color:var(--red-bright)" data-en="Danger Zone" data-es="Zona de Peligro">Danger Zone</div>
+          <p style="font-size:.88rem;color:var(--text-secondary);margin-bottom:1rem" data-en="Permanently delete your account and all scores." data-es="Elimina permanentemente tu cuenta y todas tus puntuaciones.">Permanently delete your account and all scores.</p>
+          <button class="btn btn-danger" onclick="deleteAccount()" data-en="Delete Account" data-es="Eliminar Cuenta">Delete Account</button>
+        </div>
       </div>
     </div>
   </div>
@@ -76,58 +124,129 @@
 <div class="toast" id="toast"></div>
 <script src="js/api.js"></script>
 <script>
-if(Auth.isLoggedIn()) window.location.href = 'profile.html';
+// Guard: must be logged in
+if(!Auth.isLoggedIn()) window.location.href = 'login.html';
 
-let avatarBase64 = '';
+// Show admin link if admin
+if(Auth.isAdmin()) document.getElementById('nav-admin-btn').style.display = '';
 
-function previewAvatar(e){
+let currentUser = null;
+
+async function loadProfile(){
+  try {
+    currentUser = await AuthAPI.getProfile();
+    // Fill header
+    document.getElementById('p-username').textContent = currentUser.username;
+    document.getElementById('p-role').textContent = currentUser.role === 'admin' ? '👑 Admin' : '⚔️ Player';
+    document.getElementById('p-joined').textContent =
+      (document.documentElement.lang === 'es' ? 'Miembro desde ' : 'Member since ') +
+      new Date(currentUser.createdAt).toLocaleDateString('en-GB', {month:'long', year:'numeric'});
+    // Avatar
+    if(currentUser.avatar){
+      document.getElementById('big-avatar').innerHTML =
+        `<img src="${currentUser.avatar}" style="width:100%;height:100%;object-fit:cover;border-radius:50%">`;
+    }
+    // Badges
+    const badges = [];
+    if(currentUser.role === 'admin') badges.push('<span class="badge badge-gold">👑 Admin</span>');
+    document.getElementById('p-badges').innerHTML = badges.join('');
+    // Edit fields
+    document.getElementById('edit-username').value = currentUser.username;
+    document.getElementById('edit-email').value    = currentUser.email;
+  } catch(e){
+    showToast('Could not load profile','error');
+  }
+}
+
+async function loadStats(){
+  try {
+    const history = await ScoresAPI.getHistory();
+    // Best score
+    if(history.length){
+      const best = history.reduce((a,b) => a.score > b.score ? a : b);
+      document.getElementById('st-best').textContent   = best.score.toLocaleString();
+      document.getElementById('st-matches').textContent = history.length;
+      document.getElementById('st-wave').textContent   = Math.max(...history.map(s=>s.level));
+    } else {
+      document.getElementById('st-best').textContent = '0';
+      document.getElementById('st-matches').textContent = '0';
+      document.getElementById('st-wave').textContent = '0';
+    }
+    // Global rank from ranking
+    const ranking = await ScoresAPI.getRanking();
+    const myRank = ranking.findIndex(s => s.userId?._id === currentUser?._id || s.userId?.username === currentUser?.username);
+    document.getElementById('st-rank').textContent = myRank >= 0 ? '#' + (myRank+1) : 'N/A';
+
+    // Score history list
+    const list = document.getElementById('score-history-list');
+    if(!history.length){
+      list.innerHTML = '<p style="text-align:center;padding:1.5rem;color:var(--text-dim)" data-en="No scores yet. Play the game!" data-es="Sin puntuaciones. ¡Juega!">No scores yet. Play the game!</p>';
+      return;
+    }
+    list.innerHTML = history.slice(0,12).map(s => `
+      <div class="score-row">
+        <span class="score-date">${new Date(s.createdAt).toLocaleDateString()}</span>
+        <span class="score-diff diff-${s.difficulty}">${s.difficulty}</span>
+        <span class="score-wave">Wave ${s.level}</span>
+        <span class="score-val">${s.score.toLocaleString()}</span>
+      </div>`).join('');
+  } catch(e){
+    document.getElementById('score-history-list').innerHTML =
+      '<p style="text-align:center;padding:1rem;color:var(--text-dim)">Could not load scores</p>';
+  }
+}
+
+async function uploadAvatar(e){
   const file = e.target.files[0];
   if(!file) return;
   const reader = new FileReader();
-  reader.onload = ev => {
-    avatarBase64 = ev.target.result; // full data:image base64
-    const box = document.getElementById('avatar-preview');
-    box.innerHTML = `<img src="${avatarBase64}" style="width:100%;height:100%;object-fit:cover;border-radius:8px">`;
+  reader.onload = async ev => {
+    try {
+      await AuthAPI.updateAvatar(ev.target.result);
+      document.getElementById('big-avatar').innerHTML =
+        `<img src="${ev.target.result}" style="width:100%;height:100%;object-fit:cover;border-radius:50%">`;
+      showToast('Avatar updated!','success');
+    } catch(err){ showToast(err.message,'error'); }
   };
   reader.readAsDataURL(file);
 }
 
-async function doRegister(){
-  // Clear errors
-  ['user','email','pass','pass2'].forEach(f => document.getElementById('err-'+f).textContent = '');
-
-  const username = document.getElementById('reg-user').value.trim();
-  const email    = document.getElementById('reg-email').value.trim();
-  const pass     = document.getElementById('reg-pass').value;
-  const pass2    = document.getElementById('reg-pass2').value;
-
-  let valid = true;
-  if(!username){ document.getElementById('err-user').textContent = 'Username required'; valid=false; }
-  if(!email)   { document.getElementById('err-email').textContent = 'Email required'; valid=false; }
-  if(pass.length < 8){ document.getElementById('err-pass').textContent = 'Minimum 8 characters'; valid=false; }
-  if(pass !== pass2) { document.getElementById('err-pass2').textContent = 'Passwords do not match'; valid=false; }
-  if(!valid) return;
-
-  const btn = document.getElementById('btn-reg');
-  btn.disabled = true; btn.innerHTML = '<span class="spinner"></span>';
-
+async function saveProfile(){
+  const username = document.getElementById('edit-username').value.trim();
+  const email    = document.getElementById('edit-email').value.trim();
+  if(!username || !email){ showToast('Fill all fields','error'); return; }
   try {
-    await AuthAPI.register(username, email, pass);
-    // Auto login after register
-    await AuthAPI.login(email, pass);
-    // Upload avatar if provided
-    if(avatarBase64){
-      try { await AuthAPI.updateAvatar(avatarBase64); } catch(_){}
-    }
-    showToast('Account created! Welcome!','success');
-    setTimeout(() => window.location.href = 'profile.html', 900);
-  } catch(e){
-    showToast(e.message || 'Registration failed','error');
-    btn.disabled = false;
-    btn.setAttribute('data-en','⚔️ Create Account');
-    btn.textContent = '⚔️ Create Account';
-  }
+    await AuthAPI.updateProfile(username, email);
+    document.getElementById('p-username').textContent = username;
+    showToast('Profile updated!','success');
+  } catch(e){ showToast(e.message,'error'); }
 }
+
+async function changePass(){
+  const cur  = document.getElementById('cur-pass').value;
+  const np   = document.getElementById('new-pass').value;
+  const np2  = document.getElementById('new-pass2').value;
+  if(!cur || !np){ showToast('Fill all fields','error'); return; }
+  if(np !== np2){ showToast('Passwords do not match','error'); return; }
+  if(np.length < 8){ showToast('Min 8 characters','error'); return; }
+  try {
+    await AuthAPI.changePassword(cur, np);
+    showToast('Password updated!','success');
+    ['cur-pass','new-pass','new-pass2'].forEach(id => document.getElementById(id).value = '');
+  } catch(e){ showToast(e.message,'error'); }
+}
+
+async function deleteAccount(){
+  if(!confirm('Are you sure? This cannot be undone.')) return;
+  try {
+    await AuthAPI.deleteAccount();
+    Auth.clear();
+    window.location.href = 'index.html';
+  } catch(e){ showToast(e.message,'error'); }
+}
+
+// Init
+loadProfile().then(loadStats);
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="js/interactions.js"></script>

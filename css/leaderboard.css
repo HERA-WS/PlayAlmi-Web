@@ -1,0 +1,167 @@
+/* ═══════════════════════════════════════════════
+   leaderboard.css — Age of The Dead · Rankings
+   ═══════════════════════════════════════════════ */
+
+.lb-wrap {
+  max-width: 900px; margin: 0 auto; padding: 2.5rem 2rem 4rem;
+}
+.lb-page-header { text-align: center; margin-bottom: 2.25rem; }
+.lb-page-header h1 {
+  font-family: 'Cinzel', serif; font-size: 2.1rem; font-weight: 700;
+  color: var(--text-primary); text-shadow: 0 0 30px rgba(168,85,247,.25);
+}
+.lb-page-header p { color: var(--text-secondary); margin-top: .35rem; font-size: .95rem; }
+
+/* ─── FILTERS ─── */
+.lb-filters { display: flex; gap: .65rem; flex-wrap: wrap; margin-bottom: 2rem; }
+.lb-filter {
+  padding: .38rem .95rem; border-radius: 20px; font-size: .78rem;
+  font-weight: 700; letter-spacing: .07em; text-transform: uppercase; cursor: pointer;
+  border: 1px solid var(--border-subtle); background: transparent;
+  color: var(--text-secondary); transition: all .2s;
+}
+.lb-filter.active, .lb-filter:hover {
+  background: rgba(168,85,247,.15); color: var(--purple-bright);
+  border-color: var(--border-glow);
+}
+
+/* ─── PODIUM ─── */
+.podium-row {
+  display: flex; align-items: flex-end; justify-content: center;
+  gap: 1rem; margin-bottom: 2.5rem; min-height: 180px;
+}
+.podium-loading { display: flex; align-items: center; justify-content: center; width: 100%; }
+.podium-card {
+  background: var(--bg-card); border: 1px solid var(--border-subtle);
+  border-radius: 12px; padding: 1.5rem 1rem;
+  text-align: center; transition: transform .3s;
+  display: flex; flex-direction: column; align-items: center; gap: .4rem;
+}
+.podium-card:hover { transform: translateY(-5px); }
+.podium-card.gold   { border-color: rgba(212,160,23,.35); min-width: 180px; box-shadow: 0 0 28px rgba(212,160,23,.1); }
+.podium-card.silver { border-color: rgba(192,192,192,.25); min-width: 155px; }
+.podium-card.bronze { border-color: rgba(205,127,50,.22); min-width: 155px; }
+.podium-card.large  { }
+.podium-card.medium { margin-bottom: -16px; }
+.podium-card.small  { margin-bottom: -28px; }
+.podium-medal { font-size: 1.6rem; }
+.podium-avatar {
+  width: 58px; height: 58px; border-radius: 50%;
+  background: var(--purple-dark); border: 2px solid var(--border-subtle);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem; overflow: hidden;
+}
+.podium-card.gold .podium-avatar { width: 68px; height: 68px; border-color: var(--gold); box-shadow: 0 0 18px rgba(212,160,23,.3); }
+.podium-name { font-family: 'Cinzel', serif; font-size: .88rem; font-weight: 600; color: var(--text-primary); }
+.podium-score {
+  font-family: 'Bebas Neue', sans-serif; font-size: 1.35rem;
+  color: var(--gold-bright); letter-spacing: .04em;
+}
+.podium-card.silver .podium-score, .podium-card.bronze .podium-score { color: var(--purple-bright); font-size: 1.1rem; }
+.podium-meta { font-size: .72rem; color: var(--text-dim); }
+
+/* ─── TABLE ─── */
+.lb-table-card {
+  background: var(--bg-card); border: 1px solid var(--border-subtle);
+  border-radius: 12px; overflow: hidden;
+}
+.lb-table-head {
+  display: grid; grid-template-columns: 50px 1fr 120px 70px 90px 90px;
+  padding: .7rem 1.25rem;
+  background: rgba(168,85,247,.06);
+  border-bottom: 1px solid var(--border-subtle);
+  font-size: .72rem; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--text-dim);
+}
+.lb-row {
+  display: grid; grid-template-columns: 50px 1fr 120px 70px 90px 90px;
+  padding: .9rem 1.25rem; align-items: center;
+  border-bottom: 1px solid rgba(168,85,247,.06); transition: background .2s;
+}
+.lb-row:last-child { border-bottom: none; }
+.lb-row:hover      { background: rgba(168,85,247,.05); }
+.lb-row.gold   { background: rgba(212,160,23,.04); }
+.lb-row.silver { background: rgba(192,192,192,.03); }
+.lb-row.bronze { background: rgba(205,127,50,.03); }
+.lb-row.is-me  { background: rgba(168,85,247,.09); outline: 1px solid rgba(168,85,247,.25); }
+.lb-rank { font-family: 'Bebas Neue', sans-serif; font-size: 1.25rem; letter-spacing: .04em; }
+.rank-1 { color: var(--gold-bright); text-shadow: 0 0 12px rgba(212,160,23,.45); }
+.rank-2 { color: #c0c0c0; }
+.rank-3 { color: #cd7f32; }
+.rank-n { color: var(--text-dim); }
+.lb-user { display: flex; align-items: center; gap: .65rem; }
+.lb-avatar {
+  width: 34px; height: 34px; border-radius: 50%;
+  background: var(--purple-dark); border: 1px solid var(--border-subtle);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; overflow: hidden; flex-shrink: 0;
+}
+.lb-uname { font-weight: 600; font-size: .92rem; color: var(--text-primary); display: flex; align-items: center; gap: .4rem; }
+.lb-score { font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; color: var(--purple-bright); letter-spacing: .04em; }
+.lb-wave  { font-family: 'Bebas Neue', sans-serif; font-size: 1rem; color: var(--teal-bright); }
+.lb-date  { font-size: .8rem; color: var(--text-dim); }
+.diff-tag {
+  font-size: .7rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase;
+  padding: .15rem .5rem; border-radius: 4px; width: fit-content;
+}
+.diff-easy   { background: rgba(45,212,191,.1);  color: var(--teal-bright); }
+.diff-medium { background: rgba(212,160,23,.1);  color: var(--gold-bright); }
+.diff-hard   { background: rgba(239,68,68,.1);   color: var(--red-bright); }
+
+/* ═══════════════════════════════════════════════
+   RESPONSIVE — leaderboard.css
+   ═══════════════════════════════════════════════ */
+
+@media (max-width: 900px) {
+  .lb-wrap {
+    padding: 2rem 1.25rem 3rem;
+  }
+  .lb-table-head,
+  .lb-row {
+    grid-template-columns: 40px 1fr 100px 60px;
+  }
+  /* Ocultar columnas menos importantes en tablet */
+  .lb-table-head > *:nth-child(5),
+  .lb-table-head > *:nth-child(6),
+  .lb-row > *:nth-child(5),
+  .lb-row > *:nth-child(6) {
+    display: none;
+  }
+  .podium-card.gold { min-width: 150px; }
+  .podium-card.silver,
+  .podium-card.bronze { min-width: 125px; }
+}
+
+@media (max-width: 600px) {
+  .lb-wrap {
+    padding: 1.5rem .85rem 2.5rem;
+  }
+  .lb-page-header h1 {
+    font-size: 1.55rem;
+  }
+  .lb-table-head,
+  .lb-row {
+    grid-template-columns: 36px 1fr 90px;
+  }
+  .lb-table-head > *:nth-child(4),
+  .lb-table-head > *:nth-child(5),
+  .lb-table-head > *:nth-child(6),
+  .lb-row > *:nth-child(4),
+  .lb-row > *:nth-child(5),
+  .lb-row > *:nth-child(6) {
+    display: none;
+  }
+  .lb-filters {
+    gap: .4rem;
+  }
+  .lb-filter {
+    font-size: .72rem;
+    padding: .3rem .75rem;
+  }
+  .podium-row {
+    gap: .6rem;
+  }
+  .podium-card.gold { min-width: 130px; }
+  .podium-card.silver,
+  .podium-card.bronze { min-width: 110px; }
+}

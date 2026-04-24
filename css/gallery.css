@@ -1,0 +1,220 @@
+/* ═══════════════════════════════════════════════
+   gallery.css — Age of The Dead · Gallery
+   Aesthetic: Dark Exhibition Hall / Museum of the Dead
+   ═══════════════════════════════════════════════ */
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;900&family=Barlow:wght@300;400;500&display=swap');
+
+/* ─── GALLERY-SPECIFIC VARS ─── */
+.gallery-page {
+  --void:       #000000;
+  --void-soft:  #080808;
+  --void-card:  #0e0e0e;
+  --spotlight:  rgba(255,255,255,.05);
+  --text-bright: #ffffff;
+  --text-mid:    #888888;
+  --text-low:    #444444;
+  --accent-red:  #c0392b;
+  --accent-teal: #1abc9c;
+  --accent-gold: #d4a017;
+  --border-void: rgba(255,255,255,.07);
+}
+.gallery-page {
+  background: var(--void);
+  color: var(--text-bright);
+  font-family: 'Barlow', sans-serif;
+  min-height: 100vh;
+}
+
+/* Spotlight vignette */
+.gallery-page::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background: radial-gradient(ellipse 80% 60% at 50% 20%, rgba(192,57,43,.05) 0%, transparent 60%);
+}
+
+/* ─── WRAP ─── */
+.gallery-wrap {
+  position: relative; z-index: 1;
+  max-width: 1280px; margin: 0 auto; padding: 3rem 2rem 6rem;
+}
+
+/* ─── PAGE HEADER ─── */
+.gallery-page-header {
+  display: grid; grid-template-columns: 1fr auto;
+  align-items: end; gap: 2rem; margin-bottom: 3rem;
+  padding-bottom: 2rem; border-bottom: 1px solid var(--border-void);
+}
+.gallery-header-left { }
+.gallery-eyebrow {
+  font-family: 'Barlow Condensed', sans-serif; font-weight: 300;
+  font-size: .75rem; letter-spacing: .45em; color: var(--text-low);
+  text-transform: uppercase; margin-bottom: .6rem;
+}
+.gallery-page-header h1 {
+  font-family: 'Barlow Condensed', sans-serif; font-weight: 900;
+  font-size: 4.5rem; line-height: .9; color: var(--text-bright);
+  text-transform: uppercase; letter-spacing: -.02em;
+}
+.gallery-page-header h1 span {
+  color: var(--accent-red);
+}
+.gallery-count {
+  font-family: 'Barlow Condensed', sans-serif; font-weight: 300;
+  font-size: .8rem; letter-spacing: .2em; color: var(--text-low);
+  margin-top: .75rem;
+}
+.gallery-header-right {
+  text-align: right; padding-bottom: .5rem;
+}
+.gallery-header-right p {
+  font-family: 'Barlow', sans-serif; font-weight: 300; font-size: .9rem;
+  color: var(--text-mid); line-height: 1.6; max-width: 280px;
+}
+
+/* ─── FILTERS ─── */
+.gallery-filters {
+  display: flex; gap: 0; margin-bottom: 2.5rem;
+  border-bottom: 1px solid var(--border-void);
+}
+.gal-filter {
+  padding: .85rem 1.75rem; font-size: .75rem;
+  font-family: 'Barlow Condensed', sans-serif; font-weight: 600;
+  letter-spacing: .18em; text-transform: uppercase; cursor: pointer;
+  border: none; background: transparent; color: var(--text-low);
+  transition: all .2s; position: relative; border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+}
+.gal-filter:hover { color: var(--text-mid); }
+.gal-filter.active {
+  color: var(--text-bright); border-bottom-color: var(--accent-red);
+}
+
+/* ─── GRID ─── */
+.gallery-grid {
+  columns: 4; column-gap: 1rem;
+}
+.gal-item {
+  break-inside: avoid; margin-bottom: 1rem;
+  position: relative; overflow: hidden;
+  cursor: pointer; background: var(--void-card);
+  transition: transform .4s cubic-bezier(.25,.46,.45,.94);
+}
+.gal-item:hover { transform: scale(1.02); }
+
+/* ─── IMAGE WRAP ─── */
+.gal-img-wrap {
+  position: relative; overflow: hidden; display: block;
+  width: 100%;
+}
+.gal-img-wrap img {
+  width: 100%; display: block;
+  transition: transform .6s cubic-bezier(.25,.46,.45,.94), filter .4s;
+  filter: brightness(.85) saturate(.9);
+}
+.gal-item:hover .gal-img-wrap img {
+  transform: scale(1.08); filter: brightness(1) saturate(1.1);
+}
+
+/* Placeholder */
+.placeholder-wrap {
+  background: #111; display: flex; align-items: center; justify-content: center;
+}
+.placeholder-wrap.tall   { aspect-ratio: 3/4; }
+.placeholder-wrap.wide   { aspect-ratio: 16/9; }
+.placeholder-wrap.square { aspect-ratio: 1/1; }
+.gal-placeholder { font-size: 3rem; opacity: .15; }
+
+/* ─── OVERLAY ─── */
+.gal-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,.9) 0%, rgba(0,0,0,.3) 50%, transparent 100%);
+  opacity: 0; transition: opacity .35s;
+  display: flex; flex-direction: column; justify-content: flex-end; padding: 1.25rem;
+}
+.gal-item:hover .gal-overlay { opacity: 1; }
+.gal-overlay-name {
+  font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+  font-size: 1rem; letter-spacing: .06em; text-transform: uppercase;
+  color: #fff; margin-bottom: .3rem;
+}
+.gal-overlay-meta { display: flex; align-items: center; gap: .5rem; }
+.gal-zoom-icon {
+  position: absolute; top: 1rem; right: 1rem;
+  width: 32px; height: 32px; border-radius: 50%;
+  background: rgba(255,255,255,.1); backdrop-filter: blur(4px);
+  border: 1px solid rgba(255,255,255,.15);
+  display: flex; align-items: center; justify-content: center;
+  font-size: .75rem; opacity: 0; transition: opacity .3s;
+}
+.gal-item:hover .gal-zoom-icon { opacity: 1; }
+.gal-soon {
+  font-family: 'Barlow Condensed', sans-serif; font-weight: 400;
+  font-size: .7rem; letter-spacing: .2em; color: var(--text-low); text-transform: uppercase;
+}
+
+/* ─── DIFF TAGS ─── */
+.diff-tag {
+  font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+  font-size: .65rem; letter-spacing: .12em; text-transform: uppercase;
+  padding: .12rem .5rem; border: 1px solid;
+}
+.diff-easy   { color: #1abc9c; border-color: rgba(26,188,156,.4); }
+.diff-medium { color: #d4a017; border-color: rgba(212,160,23,.4); }
+.diff-hard   { color: #c0392b; border-color: rgba(192,57,43,.4); }
+
+/* ─── FEATURED ITEM (first big card) ─── */
+.gal-item.featured { margin-bottom: 1rem; }
+
+/* ─── LIGHTBOX ─── */
+.lightbox {
+  position: fixed; inset: 0; z-index: 3000;
+  background: rgba(0,0,0,.97);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 2rem; opacity: 0; pointer-events: none;
+  transition: opacity .4s;
+}
+.lightbox.active { opacity: 1; pointer-events: all; }
+.lightbox img {
+  max-width: 88vw; max-height: 78vh; object-fit: contain;
+  box-shadow: 0 0 120px rgba(192,57,43,.2);
+}
+.lightbox-close {
+  position: absolute; top: 2rem; right: 2rem;
+  font-family: 'Barlow Condensed', sans-serif; font-size: .8rem;
+  font-weight: 600; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--text-low); background: transparent; border: 1px solid var(--border-void);
+  padding: .4rem 1rem; cursor: pointer; transition: all .2s;
+}
+.lightbox-close:hover { color: #fff; border-color: rgba(255,255,255,.3); }
+.lightbox-caption {
+  margin-top: 1.25rem; font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 300; font-size: .85rem; letter-spacing: .15em;
+  color: var(--text-mid); text-transform: uppercase; text-align: center;
+}
+.lightbox-nav {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  display: flex; justify-content: space-between; width: calc(100% - 4rem); pointer-events: none;
+}
+.lb-arrow {
+  font-size: 1.5rem; color: rgba(255,255,255,.3); cursor: pointer;
+  pointer-events: all; transition: color .2s; padding: 1rem;
+  background: rgba(0,0,0,.5); border: 1px solid var(--border-void);
+}
+.lb-arrow:hover { color: #fff; }
+
+/* ─── FOOTER OVERRIDE ─── */
+.gallery-page footer {
+  background: #000; border-top: 1px solid var(--border-void);
+  font-family: 'Barlow Condensed', sans-serif; font-weight: 400; letter-spacing: .08em;
+}
+.gallery-page footer a { color: var(--accent-red); }
+
+/* ─── COMPANY BAR ─── */
+.company-bar {
+  display: flex; align-items: center; justify-content: center; gap: 1.25rem;
+  padding: 1.75rem 2rem; border-top: 1px solid var(--border-subtle);
+  background: rgba(0,0,0,.3); position: relative; z-index: 1;
+}
+.company-bar img { height: 34px; opacity: .65; filter: grayscale(.2); transition: all .2s; }
+.company-bar img:hover { opacity: 1; filter: none; }
+.company-bar span { color: var(--text-dim); font-size: .8rem; letter-spacing: .06em; }

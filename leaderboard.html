@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Age of The Dead — Register</title>
+<title>Age of The Dead — Leaderboard</title>
 <link rel="stylesheet" href="css/base.css">
-<link rel="stylesheet" href="css/auth.css">
+<link rel="stylesheet" href="css/leaderboard.css">
 </head>
 <body>
 <nav>
@@ -15,59 +15,52 @@
   </a>
   <div class="nav-links">
     <a href="index.html" data-en="Home" data-es="Inicio">Home</a>
-    <a href="leaderboard.html" data-en="Leaderboard" data-es="Ranking">Leaderboard</a>
+    <a href="leaderboard.html" class="active" data-en="Leaderboard" data-es="Ranking">Leaderboard</a>
+    <a href="manual.html" data-en="Manual" data-es="Manual">Manual</a>
+    <a href="gallery.html" data-en="Gallery" data-es="Galería">Gallery</a>
+    <a href="profile.html" id="nav-profile-btn" style="display:none" data-en="Profile" data-es="Perfil">Profile</a>
+    <a href="admin.html" id="nav-admin-btn" style="display:none" data-en="Admin" data-es="Admin">Admin</a>
   </div>
   <div class="nav-right">
     <button id="lang-btn" onclick="toggleLang()">EN / ES</button>
-    <a href="login.html" class="btn btn-outline" data-en="Sign In" data-es="Entrar">Sign In</a>
+    <a href="login.html" id="nav-login-btn" class="btn btn-outline" data-en="Sign In" data-es="Entrar">Sign In</a>
+    <a href="register.html" id="nav-register-btn" class="btn btn-primary" data-en="Play Now" data-es="Jugar">Play Now</a>
+    <button id="nav-logout-btn" style="display:none" class="btn btn-outline" onclick="AuthAPI.logout()" data-en="Log Out" data-es="Salir">Log Out</button>
   </div>
 </nav>
 
-<div class="page-wrap auth-bg">
-  <div class="auth-wrap fade-in">
-    <div class="auth-card">
-      <div class="auth-header">
-        <div class="auth-title" data-en="Create Account" data-es="Crear Cuenta">Create Account</div>
-        <div class="auth-sub" data-en="Join the fight. Claim your place on the board." data-es="Únete a la lucha. Reclama tu lugar en el ranking.">Join the fight. Claim your place on the board.</div>
-      </div>
+<div class="page-wrap">
+  <div class="lb-wrap">
+    <div class="lb-page-header fade-in">
+      <h1 data-en="🏆 Leaderboard" data-es="🏆 Ranking">🏆 Leaderboard</h1>
+      <p data-en="The greatest warriors of the Age of The Dead" data-es="Los mejores guerreros de Age of The Dead">The greatest warriors of the Age of The Dead</p>
+    </div>
 
-      <div class="form-group">
-        <label data-en="Username" data-es="Usuario">Username</label>
-        <input type="text" id="reg-user" placeholder="DeadSlayer99" maxlength="20">
-        <span class="form-error" id="err-user"></span>
-      </div>
-      <div class="form-group">
-        <label data-en="Email" data-es="Email">Email</label>
-        <input type="email" id="reg-email" placeholder="you@example.com">
-        <span class="form-error" id="err-email"></span>
-      </div>
-      <div class="form-group">
-        <label data-en="Password" data-es="Contraseña">Password</label>
-        <input type="password" id="reg-pass" placeholder="Min. 8 characters">
-        <span class="form-error" id="err-pass"></span>
-      </div>
-      <div class="form-group">
-        <label data-en="Confirm Password" data-es="Confirmar Contraseña">Confirm Password</label>
-        <input type="password" id="reg-pass2" placeholder="Repeat password">
-        <span class="form-error" id="err-pass2"></span>
-      </div>
+    <!-- FILTERS -->
+    <div class="lb-filters fade-in-2" id="lb-filters">
+      <button class="lb-filter active" data-diff="all" data-en="All" data-es="Todos">All</button>
+      <button class="lb-filter" data-diff="easy" data-en="Easy" data-es="Fácil">Easy</button>
+      <button class="lb-filter" data-diff="medium" data-en="Medium" data-es="Medio">Medium</button>
+      <button class="lb-filter" data-diff="hard" data-en="Hard" data-es="Difícil">Hard</button>
+    </div>
 
-      <div class="form-group">
-        <label data-en="Avatar (optional)" data-es="Avatar (opcional)">Avatar (optional)</label>
-        <div class="avatar-preview-wrap">
-          <div class="avatar-preview-box" id="avatar-preview" onclick="document.getElementById('reg-avatar').click()">
-            <span>🧟</span>
-            <small data-en="Click to upload" data-es="Click para subir">Click to upload</small>
-          </div>
-          <input type="file" id="reg-avatar" accept="image/png,image/jpeg,image/webp" style="display:none" onchange="previewAvatar(event)">
-        </div>
+    <!-- TOP 3 PODIUM -->
+    <div class="podium-row fade-in-2" id="podium-row">
+      <div class="podium-loading"><span class="spinner"></span></div>
+    </div>
+
+    <!-- TABLE -->
+    <div class="lb-table-card fade-in-3">
+      <div class="lb-table-head">
+        <span data-en="Rank" data-es="Pos.">#</span>
+        <span data-en="Player" data-es="Jugador">Player</span>
+        <span data-en="Score" data-es="Puntos">Score</span>
+        <span data-en="Wave" data-es="Oleada">Wave</span>
+        <span data-en="Difficulty" data-es="Dificultad">Difficulty</span>
+        <span data-en="Date" data-es="Fecha">Date</span>
       </div>
-
-      <button class="btn btn-primary btn-block" id="btn-reg" onclick="doRegister()" data-en="⚔️ Create Account" data-es="⚔️ Crear Cuenta">⚔️ Create Account</button>
-
-      <div class="form-footer">
-        <span data-en="Already have an account? " data-es="¿Ya tienes cuenta? ">Already have an account? </span>
-        <a href="login.html" data-en="Sign In" data-es="Entrar">Sign In</a>
+      <div id="lb-rows">
+        <div style="text-align:center;padding:3rem;color:var(--text-dim)"><span class="spinner"></span></div>
       </div>
     </div>
   </div>
@@ -76,58 +69,92 @@
 <div class="toast" id="toast"></div>
 <script src="js/api.js"></script>
 <script>
-if(Auth.isLoggedIn()) window.location.href = 'profile.html';
+let currentDiff = 'all';
+const currentUser = Auth.getUser();
 
-let avatarBase64 = '';
-
-function previewAvatar(e){
-  const file = e.target.files[0];
-  if(!file) return;
-  const reader = new FileReader();
-  reader.onload = ev => {
-    avatarBase64 = ev.target.result; // full data:image base64
-    const box = document.getElementById('avatar-preview');
-    box.innerHTML = `<img src="${avatarBase64}" style="width:100%;height:100%;object-fit:cover;border-radius:8px">`;
-  };
-  reader.readAsDataURL(file);
-}
-
-async function doRegister(){
-  // Clear errors
-  ['user','email','pass','pass2'].forEach(f => document.getElementById('err-'+f).textContent = '');
-
-  const username = document.getElementById('reg-user').value.trim();
-  const email    = document.getElementById('reg-email').value.trim();
-  const pass     = document.getElementById('reg-pass').value;
-  const pass2    = document.getElementById('reg-pass2').value;
-
-  let valid = true;
-  if(!username){ document.getElementById('err-user').textContent = 'Username required'; valid=false; }
-  if(!email)   { document.getElementById('err-email').textContent = 'Email required'; valid=false; }
-  if(pass.length < 8){ document.getElementById('err-pass').textContent = 'Minimum 8 characters'; valid=false; }
-  if(pass !== pass2) { document.getElementById('err-pass2').textContent = 'Passwords do not match'; valid=false; }
-  if(!valid) return;
-
-  const btn = document.getElementById('btn-reg');
-  btn.disabled = true; btn.innerHTML = '<span class="spinner"></span>';
+async function loadRanking(diff){
+  const rowsEl = document.getElementById('lb-rows');
+  const podiumEl = document.getElementById('podium-row');
+  rowsEl.innerHTML = '<div style="text-align:center;padding:3rem;color:var(--text-dim)"><span class="spinner"></span></div>';
+  podiumEl.innerHTML = '<div class="podium-loading"><span class="spinner"></span></div>';
 
   try {
-    await AuthAPI.register(username, email, pass);
-    // Auto login after register
-    await AuthAPI.login(email, pass);
-    // Upload avatar if provided
-    if(avatarBase64){
-      try { await AuthAPI.updateAvatar(avatarBase64); } catch(_){}
+    const ranking = diff === 'all'
+      ? await ScoresAPI.getRanking()
+      : await ScoresAPI.getRankingByDifficulty(diff);
+
+    // PODIUM (top 3)
+    if(!ranking.length){
+      podiumEl.innerHTML = '<p style="color:var(--text-dim);text-align:center;width:100%;padding:2rem" data-en="No scores yet." data-es="Sin puntuaciones.">No scores yet.</p>';
+    } else {
+      const podiumOrder = [ranking[1], ranking[0], ranking[2]].filter(Boolean);
+      const medals = ['🥈','🥇','🥉'];
+      const podiumCls = ['silver','gold','bronze'];
+      const sizes   = ['medium','large','small'];
+      podiumEl.innerHTML = podiumOrder.map((s,i) => {
+        const name = s.userId?.username || 'Unknown';
+        const av = s.userId?.avatar
+          ? `<img src="${s.userId.avatar}" alt="${name}" style="width:100%;height:100%;object-fit:cover;border-radius:50%">`
+          : medals[i];
+        const realRank = ranking.indexOf(s)+1;
+        return `
+          <div class="podium-card ${podiumCls[i]} ${sizes[i]}">
+            <div class="podium-medal">${medals[i]}</div>
+            <div class="podium-avatar">${av}</div>
+            <div class="podium-name">${name}</div>
+            <div class="podium-score">${s.score.toLocaleString()}</div>
+            <div class="podium-meta">Wave ${s.level}</div>
+          </div>`;
+      }).join('');
     }
-    showToast('Account created! Welcome!','success');
-    setTimeout(() => window.location.href = 'profile.html', 900);
+
+    // TABLE ROWS
+    if(!ranking.length){
+      rowsEl.innerHTML = '<div style="text-align:center;padding:3rem;color:var(--text-dim)" data-en="No scores yet for this difficulty." data-es="Sin puntuaciones para esta dificultad.">No scores yet.</div>';
+      return;
+    }
+
+    const medalIcons = ['👑','🥈','🥉'];
+    rowsEl.innerHTML = ranking.map((s,i) => {
+      const name = s.userId?.username || 'Unknown';
+      const av   = s.userId?.avatar
+        ? `<img src="${s.userId.avatar}" style="width:100%;height:100%;object-fit:cover;border-radius:50%">`
+        : (i < 3 ? medalIcons[i] : '⚔️');
+      const isMe = currentUser && name === currentUser.username;
+      const rankClass = i===0?'rank-1':i===1?'rank-2':i===2?'rank-3':'rank-n';
+      const rowClass  = i===0?'gold':i===1?'silver':i===2?'bronze':'';
+      return `
+        <div class="lb-row ${rowClass} ${isMe?'is-me':''}">
+          <span class="lb-rank ${rankClass}">${i+1}</span>
+          <div class="lb-user">
+            <div class="lb-avatar">${av}</div>
+            <div>
+              <div class="lb-uname">${name}${isMe?' <span class="badge badge-purple">You</span>':''}</div>
+            </div>
+          </div>
+          <span class="lb-score">${s.score.toLocaleString()}</span>
+          <span class="lb-wave">${s.level}</span>
+          <span class="diff-tag diff-${s.difficulty}">${s.difficulty}</span>
+          <span class="lb-date">${new Date(s.createdAt).toLocaleDateString()}</span>
+        </div>`;
+    }).join('');
   } catch(e){
-    showToast(e.message || 'Registration failed','error');
-    btn.disabled = false;
-    btn.setAttribute('data-en','⚔️ Create Account');
-    btn.textContent = '⚔️ Create Account';
+    rowsEl.innerHTML = '<div style="text-align:center;padding:3rem;color:var(--text-dim)">Could not load leaderboard. API may be offline.</div>';
+    podiumEl.innerHTML = '';
   }
 }
+
+// Filter clicks
+document.getElementById('lb-filters').addEventListener('click', e => {
+  const btn = e.target.closest('.lb-filter');
+  if(!btn) return;
+  document.querySelectorAll('.lb-filter').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  currentDiff = btn.dataset.diff;
+  loadRanking(currentDiff);
+});
+
+loadRanking('all');
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="js/interactions.js"></script>

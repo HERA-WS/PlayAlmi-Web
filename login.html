@@ -1,247 +1,118 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Login — Age of The Death</title>
-  <link rel="stylesheet" href="css/style.css" />
-  <style>
-    .auth-page {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 5rem 1.5rem 2rem;
-      position: relative;
-    }
-
-    .auth-bg {
-      position: fixed;
-      inset: 0;
-      background:
-        radial-gradient(ellipse 60% 60% at 30% 50%, rgba(58, 107, 138, 0.08) 0%, transparent 60%),
-        radial-gradient(ellipse 60% 60% at 70% 50%, rgba(123, 94, 167, 0.08) 0%, transparent 60%);
-      pointer-events: none;
-    }
-
-    .auth-container {
-      width: 100%;
-      max-width: 440px;
-      position: relative;
-      z-index: 1;
-      opacity: 0;
-      animation: fadeInUp 0.7s ease 0.1s forwards;
-    }
-
-    .auth-header {
-      text-align: center;
-      margin-bottom: 2.5rem;
-    }
-
-    .auth-logo {
-      height: 50px;
-      margin-bottom: 1.5rem;
-      filter: drop-shadow(0 0 12px rgba(123, 94, 167, 0.5));
-    }
-
-    .auth-title {
-      font-family: 'Cinzel Decorative', serif;
-      font-size: 1.5rem;
-      color: var(--text-primary);
-      margin-bottom: 0.5rem;
-    }
-
-    .auth-subtitle {
-      color: var(--text-secondary);
-      font-style: italic;
-      font-size: 0.95rem;
-    }
-
-    .auth-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      padding: 2.5rem;
-      position: relative;
-    }
-
-    .auth-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, var(--accent-purple), var(--accent-blue), transparent);
-    }
-
-    .btn-full {
-      width: 100%;
-      padding: 14px;
-      text-align: center;
-    }
-
-    .auth-footer {
-      text-align: center;
-      margin-top: 1.5rem;
-      color: var(--text-muted);
-      font-size: 0.9rem;
-    }
-
-    .auth-footer a {
-      color: var(--accent-glow);
-      text-decoration: none;
-      transition: color 0.3s;
-    }
-
-    .auth-footer a:hover {
-      color: var(--text-primary);
-    }
-
-    .password-wrapper {
-      position: relative;
-    }
-
-    .toggle-password {
-      position: absolute;
-      right: 12px;
-      top: 50%;
-      transform: translateY(-50%);
-      background: none;
-      border: none;
-      color: var(--text-muted);
-      cursor: pointer;
-      font-size: 1rem;
-      transition: color 0.3s;
-    }
-
-    .toggle-password:hover {
-      color: var(--text-primary);
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Age of The Dead — Sign In</title>
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/auth.css">
 </head>
 <body>
+<nav>
+  <a class="nav-logo" href="index.html">
+    <span>HERA Studio</span>
+  </a>
+  <div class="nav-links">
+    <a href="index.html" data-en="Home" data-es="Inicio">Home</a>
+    <a href="leaderboard.html" data-en="Leaderboard" data-es="Ranking">Leaderboard</a>
+  </div>
+  <div class="nav-right">
+    <button id="lang-btn" onclick="toggleLang()">EN / ES</button>
+    <a href="register.html" class="btn btn-primary" data-en="Register" data-es="Registrarse">Register</a>
+  </div>
+</nav>
 
-  <nav class="navbar">
-    <a href="index.html" class="nav-logo">
-      <img src="img/logo.png" alt="HERA" />
-      <span>Age of The Death</span>
-    </a>
-    <button class="hamburger" id="hamburger">
-      <span></span><span></span><span></span>
-    </button>
-    <ul class="nav-links" id="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="ranking.html">Ranking</a></li>
-      <li id="nav-profile" style="display:none"><a href="perfil.html">Profile</a></li>
-      <li id="nav-logout" style="display:none"><a href="#" class="btn-nav">Logout</a></li>
-      <li id="nav-login"><a href="login.html" class="btn-nav">Login</a></li>
-      <li id="nav-register"><a href="register.html">Register</a></li>
-    </ul>
-  </nav>
-
-  <div class="auth-bg"></div>
-
-  <main class="auth-page">
-    <div class="auth-container">
+<div class="page-wrap auth-bg">
+  <div class="auth-wrap fade-in">
+    <div class="auth-card">
       <div class="auth-header">
-        <img src="img/logo.png" alt="HERA" class="auth-logo" />
-        <h1 class="auth-title">Welcome Back</h1>
-        <p class="auth-subtitle">Enter your credentials to continue your journey</p>
+        <div class="auth-title" data-en="Welcome Back" data-es="Bienvenido">Welcome Back</div>
+        <div class="auth-sub" data-en="Sign in to your account" data-es="Inicia sesión en tu cuenta">Sign in to your account</div>
       </div>
 
-      <div class="auth-card">
-        <div class="alert alert-error" id="alert-error"></div>
-        <div class="alert alert-success" id="alert-success"></div>
+      <div class="form-group">
+        <label data-en="Email" data-es="Email">Email</label>
+        <input type="email" id="login-email" placeholder="warrior@example.com">
+        <span class="form-error" id="err-email"></span>
+      </div>
+      <div class="form-group">
+        <label data-en="Password" data-es="Contraseña">Password</label>
+        <input type="password" id="login-pass" placeholder="••••••••">
+        <span class="form-error" id="err-pass"></span>
+      </div>
 
-        <form id="login-form" novalidate>
-          <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" id="email" placeholder="your@email.com" autocomplete="email" />
-            <span class="form-error" id="error-email">Please enter a valid email.</span>
-          </div>
+      <button class="btn btn-primary btn-block" id="btn-login" onclick="doLogin()" data-en="⚔️ Sign In" data-es="⚔️ Entrar">⚔️ Sign In</button>
 
-          <div class="form-group">
-            <label for="password">Password</label>
-            <div class="password-wrapper">
-              <input type="password" id="password" placeholder="••••••••" autocomplete="current-password" />
-              <button type="button" class="toggle-password" id="toggle-pwd">👁</button>
-            </div>
-            <span class="form-error" id="error-password">Password is required.</span>
-          </div>
-
-          <button type="submit" class="btn-primary btn-full" id="btn-login">
-            Enter the Realm
-          </button>
-        </form>
-
-        <div class="divider"><span>or</span></div>
-
-        <div class="auth-footer">
-          Don't have an account? <a href="register.html">Register here</a>
-        </div>
+      <div class="form-footer">
+        <a href="#" onclick="showForgot()" data-en="Forgot password?" data-es="¿Olvidaste tu contraseña?">Forgot password?</a>
+        &nbsp;·&nbsp;
+        <span data-en="No account? " data-es="¿Sin cuenta? ">No account? </span>
+        <a href="register.html" data-en="Register" data-es="Registrarse">Register</a>
       </div>
     </div>
-  </main>
 
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-  <script src="js/main.js"></script>
-  <script>
-    // Redirect if already logged in
-    if (isLoggedIn()) window.location.href = 'perfil.html';
+    <div class="auth-card" id="forgot-card" style="display:none;margin-top:1rem">
+      <div class="auth-header">
+        <div class="auth-title" style="font-size:1.1rem" data-en="Reset Password" data-es="Recuperar Contraseña">Reset Password</div>
+      </div>
+      <div class="form-group">
+        <label data-en="Your email" data-es="Tu email">Your email</label>
+        <input type="email" id="forgot-email" placeholder="you@example.com">
+      </div>
+      <button class="btn btn-primary btn-block" onclick="doForgot()" data-en="Send Reset Link" data-es="Enviar Enlace">Send Reset Link</button>
+    </div>
+  </div>
+</div>
 
-    $('#toggle-pwd').on('click', function () {
-      const input = $('#password');
-      const type = input.attr('type') === 'password' ? 'text' : 'password';
-      input.attr('type', type);
-      $(this).text(type === 'password' ? '👁' : '🙈');
-    });
+<div class="toast" id="toast"></div>
+<script src="js/api.js"></script>
+<script>
+if(Auth.isLoggedIn()) window.location.href = 'profile.html';
 
-    $('#login-form').on('submit', async function (e) {
-      e.preventDefault();
+async function doLogin(){
+  const email = document.getElementById('login-email').value.trim();
+  const pass  = document.getElementById('login-pass').value;
+  document.getElementById('err-email').textContent = '';
+  document.getElementById('err-pass').textContent  = '';
 
-      const email = $('#email').val().trim();
-      const password = $('#password').val();
-      let valid = true;
+  if(!email){ document.getElementById('err-email').textContent = 'Email required'; return; }
+  if(!pass){  document.getElementById('err-pass').textContent  = 'Password required'; return; }
 
-      // Validations
-      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        $('#email').addClass('error');
-        $('#error-email').addClass('show');
-        valid = false;
-      } else {
-        $('#email').removeClass('error');
-        $('#error-email').removeClass('show');
-      }
+  const btn = document.getElementById('btn-login');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>';
 
-      if (!password) {
-        $('#password').addClass('error');
-        $('#error-password').addClass('show');
-        valid = false;
-      } else {
-        $('#password').removeClass('error');
-        $('#error-password').removeClass('show');
-      }
+  try {
+    await AuthAPI.login(email, pass);
+    showToast('Welcome back!','success');
+    setTimeout(() => window.location.href = 'profile.html', 900);
+  } catch(e) {
+    showToast(e.message || 'Login failed','error');
+    btn.disabled = false;
+    btn.textContent = '⚔️ Sign In';
+  }
+}
 
-      if (!valid) return;
+function showForgot(){
+  const fc = document.getElementById('forgot-card');
+  fc.style.display = fc.style.display === 'none' ? 'block' : 'none';
+}
 
-      const $btn = $('#btn-login');
-      $btn.text('Entering...').prop('disabled', true);
-      $('#alert-error').removeClass('show');
+async function doForgot(){
+  const email = document.getElementById('forgot-email').value.trim();
+  if(!email){ showToast('Enter your email','error'); return; }
+  try {
+    await AuthAPI.forgotPassword(email);
+    showToast('Reset email sent!','success');
+    document.getElementById('forgot-card').style.display = 'none';
+  } catch(e) {
+    showToast(e.message,'error');
+  }
+}
 
-      try {
-        const data = await apiRequest('/auth/login', 'POST', { email, password });
-        setToken(data.token);
-        localStorage.setItem('username', data.username);
-        localStorage.setItem('avatar', data.avatar || '');
-
-        $('#alert-success').text('Welcome back, ' + data.username + '!').addClass('show');
-
-        setTimeout(() => {
-          window.location.href = 'perfil.html';
-        }, 1000);
-      } catch (err) {
-        $('#alert-error').text(err.message).addClass('show');
-        $btn.text('Enter the Realm').prop('disabled', false);
-      }
-    });
-  </script>
+document.addEventListener('keydown', e => { if(e.key === 'Enter') doLogin(); });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="js/interactions.js"></script>
 </body>
 </html>
