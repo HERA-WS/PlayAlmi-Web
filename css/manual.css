@@ -148,7 +148,7 @@
 .step:last-child { border-left-color: transparent; }
 .step-num {
   width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
-  border: 1px solid var(--gold-dim); background: rgba(200,150,42,.08);
+  border: 1px solid var(--gold-dim); background: rgb(195, 42, 200);
   display: flex; align-items: center; justify-content: center;
   font-family: 'Cinzel', serif; font-size: .85rem; font-weight: 700;
   color: white; position: absolute; left: -18px; top: 0;

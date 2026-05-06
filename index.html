@@ -39,10 +39,10 @@
       <div class="hero-text">
         <div class="hero-eyebrow fade-in" data-en="By HERA Studio · PlayAlmi Project" data-es="Por HERA Studio · Proyecto PlayAlmi">By HERA Studio · PlayAlmi Project</div>
         <img src="img/logoJuego.png" style="width: 400px; height: 400px; object-fit: contain;">
-        <p class="hero-desc fade-in-3" data-en="<strong>Survive the medieval apocalypse.</strong> Fight undead hordes, unlock powers, and carve your name into the leaderboard for eternity." data-es="<strong>Sobrevive al apocalipsis medieval.</strong> Combate hordas de muertos, desbloquea poderes y graba tu nombre en el ranking para la eternidad."><strong>Survive the medieval apocalypse.</strong> Fight undead hordes, unlock powers, and carve your name into the leaderboard for eternity.</p>
+        <p class="hero-desc fade-in-3" data-en="<strong>Survive the medieval apocalypse.</strong> Fight undead hordes across three cursed zones of Valdgrímr and face the Pale Architect — the sorcerer behind it all." data-es="<strong>Sobrevive al apocalipsis medieval.</strong> Combate hordas de no-muertos a través de las tres zonas malditas de Valdgrímr y enfrenta al Arquitecto Pálido."><strong>Survive the medieval apocalypse.</strong> Fight undead hordes across three cursed zones of Valdgrímr and face the Pale Architect — the sorcerer behind it all.</p>
         <div class="hero-actions fade-in-4">
-          <a href="#" class="btn btn-primary" data-en="🎮 Play Now" data-es="🎮 Jugar Ahora">🎮 Play Now</a>
-          <a href="leaderboard.html" class="btn btn-outline" data-en="🏆 Leaderboard" data-es="🏆 Ranking">🏆 Leaderboard</a>
+          <a href="#" class="btn btn-primary" data-en="Play Now" data-es="Jugar Ahora">Play Now</a>
+          <a href="leaderboard.html" class="btn btn-outline" data-en="Leaderboard" data-es="Ranking">Leaderboard</a>
         </div>
         <div class="hero-stats fade-in-4">
           <div class="hero-stat"><span class="hero-stat-num" id="stat-players">—</span><span class="hero-stat-label" data-en="Players" data-es="Jugadores">Players</span></div>
@@ -55,10 +55,6 @@
         <img src="img/ZombiResolucion.png" style="width: 100%; max-width: 410px; position: relative; z-index: 1; filter: drop-shadow(0 0 40px rgba(168,85,247,.3)) drop-shadow(0 0 70px rgba(139,0,0,.2)); animation: boss-float 6s ease-in-out infinite;">  
       </div>
     </div>
-    <div class="hero-scroll" onclick="document.getElementById('features').scrollIntoView({behavior:'smooth'})">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
-      <span data-en="Explore" data-es="Explorar">Explore</span>
-    </div>
   </section>
 
   <section class="section" id="features">
@@ -68,12 +64,36 @@
       <div class="section-divider"></div>
     </div>
     <div class="features-grid">
-      <div class="feat-card"><div class="feat-icon">⚔️</div><div class="feat-title" data-en="2D Action Combat" data-es="Combate 2D">2D Action Combat</div><div class="feat-desc" data-en="Fast-paced medieval battles against endless undead waves." data-es="Batallas medievales contra hordas de zombis.">Fast-paced medieval battles against endless undead waves.</div></div>
-      <div class="feat-card"><div class="feat-icon">🏆</div><div class="feat-title" data-en="Global Ranking" data-es="Ranking Global">Global Ranking</div><div class="feat-desc" data-en="Real-time leaderboard synced via REST API to MongoDB on Azure." data-es="Ranking en tiempo real via API REST con MongoDB en Azure.">Real-time leaderboard via REST API.</div></div>
-      <div class="feat-card"><div class="feat-icon">👤</div><div class="feat-title" data-en="Player Profile" data-es="Perfil de Jugador">Player Profile</div><div class="feat-desc" data-en="Upload a custom avatar visible directly inside the game." data-es="Sube un avatar personalizado visible desde el juego.">Custom avatar visible from the game.</div></div>
-      <div class="feat-card"><div class="feat-icon">💀</div><div class="feat-title" data-en="Wave System" data-es="Sistema de Oleadas">Wave System</div><div class="feat-desc" data-en="Each wave grows harder. Track lives, wildcards and score." data-es="Cada oleada es más difícil. Vidas, comodines y puntuación.">Lives, wildcards and score tracking.</div></div>
-      <div class="feat-card"><div class="feat-icon">☁️</div><div class="feat-title" data-en="Azure Cloud" data-es="Azure Cloud">Azure Cloud</div><div class="feat-desc" data-en="Deployed on Microsoft Azure. Always available, anywhere." data-es="Desplegado en Microsoft Azure. Siempre disponible.">Azure-powered, always online.</div></div>
-      <div class="feat-card"><div class="feat-icon">🌐</div><div class="feat-title" data-en="Bilingual" data-es="Bilingüe">Bilingual</div><div class="feat-desc" data-en="Full English and Spanish support across the platform." data-es="Soporte completo en inglés y español en toda la plataforma.">English &amp; Spanish support.</div></div>
+      <div class="feat-card">
+        <div class="feat-icon">🗡️</div>
+        <div class="feat-title" data-en="Top-Down Arena Combat" data-es="Combate en Arena Cenital">Top-Down Arena Combat</div>
+        <div class="feat-desc" data-en="Control Sir Ocelot — Knight of the Crown — with arrow keys and face relentless waves of undead knights that retain their martial instincts from life." data-es="Controla a Sir Ocelot con las teclas de dirección y enfrenta oleadas implacables de caballeros no-muertos que conservan sus instintos marciales.">Control Sir Ocelot with arrow keys and face relentless waves of undead knights that retain their martial instincts from life.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">🌊</div>
+        <div class="feat-title" data-en="Wave System" data-es="Sistema de Oleadas">Wave System</div>
+        <div class="feat-desc" data-en="Survive increasingly brutal waves across 3 levels — 4, 6 and 8 waves each. Every wave cleared brings harder enemies and shorter gaps before the next assault." data-es="Sobrevive oleadas cada vez más brutales en 3 niveles — 4, 6 y 8 oleadas respectivamente. Cada oleada trae enemigos más duros e intervalos más cortos.">Survive 3 levels with 4, 6 and 8 waves each. Every wave cleared brings harder enemies and shorter gaps before the next assault.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">👑</div>
+        <div class="feat-title" data-en="Boss Battles" data-es="Combates contra Jefes">Boss Battles</div>
+        <div class="feat-desc" data-en="Three unique undead commanders await: Gorgath the Eviscerator, Lord Marrow, and the final sorcerer — the Pale Architect. Each requires learning their patterns to survive." data-es="Tres comandantes no-muertos únicos te esperan: Gorgath el Eviscerador, Lord Marrow y el hechicero final — el Arquitecto Pálido. Cada uno requiere aprender sus patrones.">Three unique bosses await: Gorgath the Eviscerator, Lord Marrow, and the final sorcerer — the Pale Architect.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">📖</div>
+        <div class="feat-title" data-en="Sacred Relics" data-es="Reliquias Sagradas">Sacred Relics</div>
+        <div class="feat-desc" data-en="Slain enemies drop four powerful relics: the Bible, the Shield, the Heart and the Crucifix — each turning the tide of battle in a different way. Choose your moment wisely." data-es="Los enemigos caídos sueltan cuatro reliquias: la Biblia, el Escudo, el Corazón y el Crucifijo. Cada una cambia el curso de la batalla de forma distinta.">Slain enemies drop four powerful relics: Bible, Shield, Heart and Crucifix — each turning the tide of battle differently.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">🏆</div>
+        <div class="feat-title" data-en="Global Leaderboard" data-es="Ranking Global">Global Leaderboard</div>
+        <div class="feat-desc" data-en="Every run is scored and timed. Undead Knights yield 10 pts, bosses 50 pts. Your final score and time are recorded — compete to claim the top of the leaderboard." data-es="Cada partida se puntúa y cronometra. Los Caballeros No-Muertos dan 10 pts, los jefes 50 pts. Compite por lo más alto del ranking.">Every run is scored and timed. Compete to claim the top of the global leaderboard.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">🗺️</div>
+        <div class="feat-title" data-en="The World of Valdgrímr" data-es="El Mundo de Valdgrímr">The World of Valdgrímr</div>
+        <div class="feat-desc" data-en="Three cursed zones across a hand-drawn Norse map: Senda Fangosa, Camino Quemado and Zona de los Muertos. Complete them all to discover the fate of the kingdom." data-es="Tres zonas malditas en un mapa nórdico dibujado a mano: Senda Fangosa, Camino Quemado y Zona de los Muertos. Completa las tres para descubrir el destino del reino.">Three cursed zones: Senda Fangosa, Camino Quemado and Zona de los Muertos. Complete them all to save Valdgrímr.</div>
+      </div>
     </div>
   </section>
 
@@ -145,10 +165,9 @@
   }
 })();
 
-// Fix nav auth state after DOM ready
 document.addEventListener('DOMContentLoaded', renderNavAuth);
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <script src="js/interactions.js"></script>
+<script src="js/interactions.js"></script>
 </body>
 </html>

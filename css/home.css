@@ -59,7 +59,10 @@
 .hero-stat-label { font-size: .72rem; color: var(--text-dim); letter-spacing: .1em; text-transform: uppercase; }
 
 /* Boss visual */
-.hero-visual { position: relative; display: flex; align-items: center; justify-content: center; }
+.hero-visual { position: relative; display: flex; align-items: center; justify-content: center;}
+.hero-visual img{
+border-radius: 10px;
+}
 .hero-ring {
   position: absolute; width: 370px; height: 370px; border-radius: 50%;
   border: 1px solid rgba(168,85,247,.14);
